@@ -3,6 +3,7 @@ package com.example.lionheartapp.models
 
 import com.google.gson.annotations.SerializedName
 
+
 data class PhotosItem(
     @SerializedName("alt_description")
     val altDescription: String,
@@ -26,18 +27,12 @@ data class PhotosItem(
     val likedByUser: Boolean,
     @SerializedName("likes")
     val likes: Int,
-    @SerializedName("links")
-    val links: Links,
     @SerializedName("promoted_at")
     val promotedAt: Any,
-    @SerializedName("sponsorship")
-    val sponsorship: Sponsorship,
     @SerializedName("updated_at")
     val updatedAt: String,
     @SerializedName("urls")
     val urls: Urls,
-    @SerializedName("user")
-    val user: User,
     @SerializedName("width")
     val width: Int
 )

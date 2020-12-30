@@ -11,7 +11,9 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var navHostFragment: Fragment
@@ -27,16 +29,7 @@ class MainActivity : AppCompatActivity() {
 
         navHostFragment = supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
         navController = navHostFragment.findNavController()
-        val appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.photoListFragment,
-                R.id.searchFragment,
-                R.id.savedFragment,
-                R.id.savedFragment
-            )
-        )
         bottomNavigationView.setupWithNavController(navController)
-        setupActionBarWithNavController(navController,appBarConfiguration)
     }
 
     override fun onSupportNavigateUp(): Boolean {

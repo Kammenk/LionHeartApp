@@ -3,4 +3,6 @@ package com.example.lionheartapp.models
 
 import com.google.gson.annotations.SerializedName
 
-class Photos : ArrayList<PhotosItem>()
+data class Photos(
+    val results: ArrayList<PhotosItem>
+)
