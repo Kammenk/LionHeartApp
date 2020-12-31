@@ -2,8 +2,8 @@
     <!-- Base application theme. -->
     <style name="Theme.LionHeartApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_500</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorPrimary">@color/black_primary</item>
+        <item name="colorPrimaryVariant">@color/black_secondary</item>
         <item name="colorOnPrimary">@color/white</item>
         <item name="android:textColorPrimary">@color/white</item>
         <!-- Secondary brand color. -->
@@ -17,6 +17,7 @@
 
     <style name="SplashScreenStyle" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="android:windowBackground">@drawable/imagify</item>
+        <item name="android:scaleType">fitXY</item>
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowTranslucentNavigation">true</item>
     </style>

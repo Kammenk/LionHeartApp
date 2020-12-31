@@ -39,7 +39,7 @@ class PhotoAdapter: RecyclerView.Adapter<PhotoAdapter.MyViewHolder>() {
         val image = holder.itemView.findViewById<ImageView>(R.id.photoImage)
         Picasso.get().load(currentItem.urls.small).fit().centerInside().into(image)
         holder.itemView.findViewById<CardView>(R.id.photoItem).setOnClickListener {
-            val action = PhotoListFragmentDirections.actionPhotoListFragmentToDetailFragment()
+            val action = PhotoListFragmentDirections.actionPhotoListFragmentToDetailFragment(currentItem)
             holder.itemView.findNavController().navigate(action)
         }
     }

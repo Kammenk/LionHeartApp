@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/viewPagerCardView"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        app:cardCornerRadius="15dp"
+        android:layout_margin="8dp"
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+
+            <ImageView
+                android:background="@drawable/view_pager_item_bg"
+                android:id="@+id/viewPagerImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/viewpageritem1"
+                android:scaleType="centerCrop"
+                />
+
+            <androidx.cardview.widget.CardView
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+            </androidx.cardview.widget.CardView>
+
+
+            <LinearLayout
+                android:layout_weight="10"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+
+                android:layout_marginTop="8dp"
+                android:layout_marginHorizontal="10dp"
+                >
+
+                <TextView
+                    android:id="@+id/viewPagerDesc"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="This is the description"
+                    android:layout_weight="1"
+                    android:textAlignment="textStart"
+                    />
+
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:id="@+id/viewPagerCreator"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="by Timothy Timothy Timothy"
+                        android:layout_marginEnd="10dp"
+                        android:textAlignment="viewEnd"
+                    />
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        app:cardCornerRadius="100dp"
+                        android:background="@drawable/view_pager_item_bg"
+                        >
+                        <ImageView
+                            android:id="@+id/viewPagerCreatorImage"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/ic_launcher_background"
+                            android:background="@drawable/view_pager_item_bg"
+                            />
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

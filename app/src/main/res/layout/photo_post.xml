@@ -12,9 +12,7 @@
         android:transitionName="image_small"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:cardCornerRadius="10dp"
         app:cardElevation="10dp"
-
 
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -29,6 +27,8 @@
             android:src="@drawable/ic_launcher_background"
             android:scaleType="centerCrop"
             android:adjustViewBounds="true"
+            android:background="@drawable/view_pager_item_bg"
+
 
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
