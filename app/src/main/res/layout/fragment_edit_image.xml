@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.fragments.EditImageFragment">
+
+    <ImageView
+        android:id="@+id/currentPhoto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/viewpageritem4"
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <ImageView
+        android:id="@+id/filterImage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <androidx.cardview.widget.CardView
+        android:translationZ="100dp"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:backgroundTint="#80ffffff"
+        app:cardCornerRadius="120dp"
+
+
+        android:layout_marginHorizontal="25dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        >
+
+    <LinearLayout
+        android:id="@+id/filterHolder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:gravity="center"
+
+        >
+
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/instantFilter"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/filter_bg"
+            android:src="@drawable/instant_filter_100"
+            android:layout_marginHorizontal="5dp"
+            app:shapeAppearance="@style/circleImageViewStyle"
+            />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/camFootageFilter"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/cam_footage_filter_100"
+            android:layout_marginHorizontal="5dp"
+            app:shapeAppearance="@style/circleImageViewStyle"
+
+            />
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/distortedFilter"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/distorted_filter_100"
+            android:layout_marginHorizontal="5dp"
+            app:shapeAppearance="@style/circleImageViewStyle"
+
+            />
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/hueFilter"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/hue_filter_100"
+            android:layout_marginHorizontal="5dp"
+            app:shapeAppearance="@style/circleImageViewStyle"
+
+            />
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/pinkyFilter"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/pinky_filter_100"
+            android:layout_marginHorizontal="5dp"
+            app:shapeAppearance="@style/circleImageViewStyle"
+
+            />
+
+    </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

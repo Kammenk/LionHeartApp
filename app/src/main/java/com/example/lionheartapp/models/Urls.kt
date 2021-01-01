@@ -2,16 +2,17 @@ package com.example.lionheartapp.models
 
 
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.RawValue
 
 data class Urls(
     @SerializedName("full")
-    val full: String,
+    val full:@RawValue String,
     @SerializedName("raw")
-    val raw: String,
+    val raw:@RawValue String,
     @SerializedName("regular")
-    val regular: String,
+    val regular:@RawValue String,
     @SerializedName("small")
-    val small: String,
+    val small:@RawValue String,
     @SerializedName("thumb")
-    val thumb: String
+    val thumb:@RawValue String
 )

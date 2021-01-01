@@ -2,40 +2,39 @@ package com.example.lionheartapp.models
 
 
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.RawValue
 
 data class Sponsor(
     @SerializedName("accepted_tos")
-    val acceptedTos: Boolean,
+    val acceptedTos:@RawValue Boolean,
     @SerializedName("bio")
-    val bio: String,
+    val bio:@RawValue String,
     @SerializedName("first_name")
-    val firstName: String,
+    val firstName:@RawValue String,
     @SerializedName("id")
-    val id: String,
+    val id:@RawValue String,
     @SerializedName("instagram_username")
-    val instagramUsername: String,
+    val instagramUsername:@RawValue String,
     @SerializedName("last_name")
-    val lastName: String,
-    @SerializedName("links")
-    val links: LinksX,
+    val lastName:@RawValue String,
     @SerializedName("location")
-    val location: Any,
+    val location:@RawValue Any,
     @SerializedName("name")
-    val name: String,
+    val name:@RawValue String,
     @SerializedName("portfolio_url")
-    val portfolioUrl: String,
+    val portfolioUrl:@RawValue String,
     @SerializedName("profile_image")
-    val profileImage: ProfileImage,
+    val profileImage:@RawValue ProfileImage,
     @SerializedName("total_collections")
-    val totalCollections: Int,
+    val totalCollections:@RawValue Int,
     @SerializedName("total_likes")
-    val totalLikes: Int,
+    val totalLikes:@RawValue Int,
     @SerializedName("total_photos")
-    val totalPhotos: Int,
+    val totalPhotos:@RawValue Int,
     @SerializedName("twitter_username")
-    val twitterUsername: String,
+    val twitterUsername:@RawValue String,
     @SerializedName("updated_at")
-    val updatedAt: String,
+    val updatedAt:@RawValue String,
     @SerializedName("username")
-    val username: String
+    val username:@RawValue String
 )

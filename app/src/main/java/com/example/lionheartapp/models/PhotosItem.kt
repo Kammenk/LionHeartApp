@@ -30,8 +30,6 @@ data class PhotosItem(
     val likedByUser: Boolean,
     @SerializedName("likes")
     val likes: Int,
-    @SerializedName("links")
-    val links:@RawValue Links,
     @SerializedName("promoted_at")
     val promotedAt: @RawValue Any,
     @SerializedName("sponsorship")

@@ -40,14 +40,29 @@
         <argument
             android:name="currentPhotoItem"
             app:argType="com.example.lionheartapp.models.PhotosItem" />
+        <action
+            android:id="@+id/action_detailFragment_to_editImageFragment"
+            app:destination="@id/editImageFragment" />
     </fragment>
     <fragment
         android:id="@+id/topPicksFragment"
         android:name="com.example.lionheartapp.ui.fragments.TopPicksFragment"
-        android:label="fragment_top_picks"
+        android:label="Top Picks"
         tools:layout="@layout/fragment_top_picks" >
         <action
             android:id="@+id/action_topPicksFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editImageFragment"
+        android:name="com.example.lionheartapp.ui.fragments.EditImageFragment"
+        android:label="Edit Image"
+        tools:layout="@layout/fragment_edit_image" >
+        <argument
+            android:name="currentItem"
+            app:argType="com.example.lionheartapp.models.PhotosItem" />
+        <action
+            android:id="@+id/action_editImageFragment_to_detailFragment"
             app:destination="@id/detailFragment" />
     </fragment>
 </navigation>

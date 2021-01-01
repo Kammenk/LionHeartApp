@@ -29,7 +29,18 @@ class MainActivity : AppCompatActivity() {
 
         navHostFragment = supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
         navController = navHostFragment.findNavController()
+        val appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.photoListFragment,
+                R.id.topPicksFragment,
+                R.id.savedFragment,
+                R.id.detailFragment,
+                R.id.editImageFragment
+            )
+        )
+
         bottomNavigationView.setupWithNavController(navController)
+        setupActionBarWithNavController(navController,appBarConfiguration)
     }
 
     override fun onSupportNavigateUp(): Boolean {

@@ -2,6 +2,7 @@ package com.example.lionheartapp.models
 
 
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.RawValue
 
 data class User(
     @SerializedName("accepted_tos")
@@ -16,16 +17,14 @@ data class User(
     val instagramUsername: String,
     @SerializedName("last_name")
     val lastName: String,
-    @SerializedName("links")
-    val links: LinksXX,
     @SerializedName("location")
-    val location: Any,
+    val location: @RawValue Any,
     @SerializedName("name")
     val name: String,
     @SerializedName("portfolio_url")
     val portfolioUrl: String,
     @SerializedName("profile_image")
-    val profileImage: ProfileImageX,
+    val profileImage: @RawValue ProfileImageX,
     @SerializedName("total_collections")
     val totalCollections: Int,
     @SerializedName("total_likes")

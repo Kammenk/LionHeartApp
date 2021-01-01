@@ -40,12 +40,10 @@ class ViewPagerAdapter(
         val view = layoutInflater.inflate(R.layout.view_pager_item,container,false)
 
         var postImage = view.findViewById<ImageView>(R.id.viewPagerImage)
-        var postDescription = view.findViewById<TextView>(R.id.viewPagerDesc)
         var postCreator = view.findViewById<TextView>(R.id.viewPagerCreator)
         var postCreatorImage = view.findViewById<ImageView>(R.id.viewPagerCreatorImage)
 
         Picasso.get().load(postList[position].urls.small).fit().centerInside().into(postImage)
-        postDescription.text = postList[position].altDescription
         postCreator.text = postList[position].user.name
         Picasso.get().load(postList[position].user.profileImage.small).fit().centerInside().into(postCreatorImage)
 
