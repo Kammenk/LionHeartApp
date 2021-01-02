@@ -1,181 +1,176 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.fragments.PhotoListFragment"
+    tools:context=".ui.fragments.SharableFragment">
 
-    android:scrollbars="vertical"
-    >
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:id="@+id/categoriesTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingHorizontal="10dp"
-            android:paddingTop="20dp"
-
-            android:text="Categories"
-            android:textSize="24sp"
-
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@id/categoriesScrollView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    <HorizontalScrollView
-        android:id="@+id/categoriesScrollView"
+    <TextView
+        android:id="@+id/sharableText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="5dp"
+        android:text="Sharables"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_marginHorizontal="5dp"
+        android:layout_marginVertical="20dp"
 
-        app:layout_constraintTop_toBottomOf="@id/categoriesTextView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/sharablesScrollView"
+        />
+
+    <HorizontalScrollView
+        android:id="@+id/sharablesScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+
+        app:layout_constraintTop_toBottomOf="@id/sharableText"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         >
 
         <LinearLayout
+            android:id="@+id/sharableLinearLayout"
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:scrollbarSize="0dp"
             >
             <androidx.cardview.widget.CardView
-                android:id="@+id/cardOne"
-                android:layout_width="170dp"
-                android:layout_height="170dp"
+                android:id="@+id/sharableOne"
+                android:layout_width="300dp"
+                android:layout_height="match_parent"
                 android:orientation="horizontal"
                 app:cardCornerRadius="8dp"
                 android:layout_marginVertical="10dp"
                 android:layout_marginHorizontal="5dp"
                 >
                 <ImageView
-                    android:id="@+id/carouselImageOne"
+                    android:id="@+id/sharableImageOne"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/nature"
+                    android:src="@drawable/sharableone"
                     android:scaleType="centerCrop"/>
                 <TextView
-                    android:id="@+id/carouselTitleOne"
+                    android:id="@+id/sharableTitleOne"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="Nature"
+                    android:text="Share"
                     android:textSize="20sp"
                     android:textColor="@color/white"
                     android:fontFamily="@font/roboto_medium"
-                    android:gravity="bottom"
-                    android:layout_marginStart="5dp"
+                    android:gravity="end|bottom"
+                    android:padding="5dp"
                     />
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
-                android:layout_width="170dp"
-                android:layout_height="170dp"
+                android:layout_width="300dp"
+                android:layout_height="match_parent"
                 android:orientation="horizontal"
                 app:cardCornerRadius="8dp"
                 android:layout_marginVertical="10dp"
                 android:layout_marginHorizontal="5dp"
                 >
                 <ImageView
-                    android:id="@+id/carouselImageTwo"
+                    android:id="@+id/sharableImageTwo"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/people"
+                    android:src="@drawable/sharabletwo"
                     android:scaleType="centerCrop"/>
                 <TextView
-                    android:id="@+id/carouselTitleTwo"
+                    android:id="@+id/sharableTitleTwo"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="People"
+                    android:text="Share"
                     android:textSize="20sp"
                     android:textColor="@color/white"
                     android:fontFamily="@font/roboto_medium"
-                    android:gravity="bottom"
-                    android:layout_marginStart="5dp"
+                    android:gravity="end|bottom"
+                    android:padding="5dp"
                     />
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
-                android:layout_width="170dp"
-                android:layout_height="170dp"
+                android:layout_width="300dp"
+                android:layout_height="match_parent"
                 android:orientation="horizontal"
                 app:cardCornerRadius="8dp"
                 android:layout_marginVertical="10dp"
                 android:layout_marginHorizontal="5dp">
                 <ImageView
-                    android:id="@+id/carouselImageThree"
+                    android:id="@+id/sharableImageThree"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/events"
+                    android:src="@drawable/sharablethree"
                     android:scaleType="centerCrop"/>
                 <TextView
-                    android:id="@+id/carouselTitleThree"
+                    android:id="@+id/sharableTitleThree"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="Events"
+                    android:text="Share"
                     android:textSize="20sp"
                     android:textColor="@color/white"
                     android:fontFamily="@font/roboto_medium"
-                    android:gravity="bottom"
-                    android:layout_marginStart="5dp"
+                    android:gravity="end|bottom"
+                    android:padding="5dp"
                     />
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
-                android:layout_width="170dp"
-                android:layout_height="170dp"
+                android:layout_width="300dp"
+                android:layout_height="match_parent"
                 android:orientation="horizontal"
                 app:cardCornerRadius="8dp"
                 android:layout_marginVertical="10dp"
                 android:layout_marginHorizontal="5dp">
                 <ImageView
-                    android:id="@+id/carouselImageFour"
+                    android:id="@+id/sharableImageFour"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/fashion"
+                    android:src="@drawable/sharablefour"
                     android:scaleType="centerCrop"/>
                 <TextView
-                    android:id="@+id/carouselTitleFour"
+                    android:id="@+id/sharableTitleFour"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="Fashion"
+                    android:text="Share"
                     android:textSize="20sp"
                     android:textColor="@color/white"
                     android:fontFamily="@font/roboto_medium"
-                    android:gravity="bottom"
-                    android:layout_marginStart="5dp"
+                    android:gravity="end|bottom"
+                    android:padding="5dp"
                     />
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
-                android:layout_width="170dp"
-                android:layout_height="170dp"
+                android:layout_width="300dp"
+                android:layout_height="match_parent"
                 android:orientation="horizontal"
                 app:cardCornerRadius="8dp"
                 android:layout_marginVertical="10dp"
                 android:layout_marginHorizontal="5dp">
                 <ImageView
-                    android:id="@+id/carouselImageFive"
+                    android:id="@+id/sharableImageFive"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/film"
+                    android:src="@drawable/sharablefive"
                     android:scaleType="centerCrop"/>
                 <TextView
-                    android:id="@+id/carouselTitleFive"
+                    android:id="@+id/sharableTitleFive"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="Films"
+                    android:text="Share"
                     android:textSize="20sp"
                     android:textColor="@color/white"
                     android:fontFamily="@font/roboto_medium"
-                    android:gravity="bottom"
-                    android:layout_marginStart="5dp"
+                    android:gravity="end|bottom"
+                    android:padding="5dp"
                     />
             </androidx.cardview.widget.CardView>
         </LinearLayout>
@@ -183,42 +178,5 @@
 
     </HorizontalScrollView>
 
-        <TextView
-            android:id="@+id/gallery"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingHorizontal="10dp"
-            android:paddingVertical="5dp"
-            android:text="Gallery"
-            android:textSize="20sp"
 
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/categoriesScrollView" />
-
-        <ProgressBar
-            android:id="@+id/progressBar"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-
-            app:layout_constraintTop_toBottomOf="@id/gallery"
-            app:layout_constraintBottom_toTopOf="@id/photoRecyclerView"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/photoRecyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-
-        app:layout_constraintTop_toBottomOf="@id/gallery"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        />
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

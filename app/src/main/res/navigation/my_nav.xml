@@ -15,10 +15,10 @@
             app:destination="@id/detailFragment" />
     </fragment>
     <fragment
-        android:id="@+id/savedFragment"
-        android:name="com.example.lionheartapp.ui.fragments.SavedFragment"
+        android:id="@+id/sharableFragment"
+        android:name="com.example.lionheartapp.ui.fragments.SharableFragment"
         android:label="Saved"
-        tools:layout="@layout/fragment_saved" >
+        tools:layout="@layout/fragment_sharable" >
         <action
             android:id="@+id/action_savedFragment_to_detailFragment"
             app:destination="@id/detailFragment" />
@@ -30,7 +30,7 @@
         tools:layout="@layout/fragment_detail" >
         <action
             android:id="@+id/action_detailFragment_to_savedFragment"
-            app:destination="@id/savedFragment" />
+            app:destination="@id/sharableFragment" />
         <action
             android:id="@+id/action_detailFragment_to_photoListFragment"
             app:destination="@id/photoListFragment" />

@@ -75,22 +75,13 @@ class EditImageFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.shareEdited) {
-            var shareIntent = Intent().apply {
-                this.action = Intent.ACTION_SEND
-                this.type = "image/*"
-                this.putExtra(Intent.EXTRA_SUBJECT,"")
-                this.putExtra(Intent.EXTRA_TEXT,"")
-            }
-            startActivity(shareIntent)
-        } else if(item.itemId == R.id.saveEdited){
-
-        } else if(item.itemId == R.id.clearFilters){
+        if (item.itemId == R.id.clearFilters){
             filterImageView.setImageResource(0)
         } else {
             return super.onOptionsItemSelected(item)
         }
         return true
     }
+
 
 }

@@ -1,10 +1,19 @@
 package com.example.lionheartapp.ui.fragments
 
+import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
+import android.media.Image
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
@@ -18,12 +27,15 @@ import com.example.lionheartapp.models.Urls
 import com.example.lionheartapp.util.Constants.Companion.ACCESS_KEY
 import com.example.lionheartapp.util.Resource
 import com.example.lionheartapp.viewmodels.MainViewModel
+import java.io.File
+import java.io.FileOutputStream
 
 class PhotoListFragment : Fragment() {
 
     private lateinit var photosAdapter: PhotoAdapter
     private lateinit var mainViewModel: MainViewModel
     private lateinit var photosRecyclerView: RecyclerView
+    private lateinit var progressBar: ProgressBar
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -38,6 +50,7 @@ class PhotoListFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_photo_list, container, false)
 
+        progressBar = view.findViewById(R.id.progressBar)
         photosRecyclerView = view.findViewById(R.id.photoRecyclerView)
         mainViewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
         mainViewModel.getPhotos(1,20,ACCESS_KEY)
@@ -45,6 +58,7 @@ class PhotoListFragment : Fragment() {
             mainViewModel.photosResponse.observe(viewLifecycleOwner, { response ->
                 when (response) {
                     is Resource.Success -> {
+                        progressBar.visibility = View.GONE
                         response.data?.let {
                             photosAdapter.setData(it)
                         }
@@ -57,11 +71,7 @@ class PhotoListFragment : Fragment() {
                         ).show()
                     }
                     is Resource.Loading -> {
-                        Toast.makeText(
-                            requireContext(),
-                            "loading",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        progressBar.visibility = View.VISIBLE
                     }
                 }
             })

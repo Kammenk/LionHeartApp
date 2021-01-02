@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
             setOf(
                 R.id.photoListFragment,
                 R.id.topPicksFragment,
-                R.id.savedFragment,
+                R.id.sharableFragment,
                 R.id.detailFragment,
                 R.id.editImageFragment
             )

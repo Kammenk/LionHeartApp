@@ -23,9 +23,7 @@ class MainViewModel @ViewModelInject constructor (
         var photosResponse: MutableLiveData<Resource<ArrayList<PhotosItem>>> = MutableLiveData()
 
         fun getPhotos(page: Int, limit: Int, clientID: String) = viewModelScope.launch {
-            println("CALLED")
             getPhotosSafeCall(page,limit,clientID)
-            println("response ${photosResponse.value}")
         }
 
     private suspend fun getPhotosSafeCall(page: Int, limit: Int, clientID: String) {
@@ -58,7 +56,6 @@ class MainViewModel @ViewModelInject constructor (
                 return  Resource.Success(photos!!)
             }
             else -> {
-                println("in else")
                 return Resource.Error(response.message())
             }
         }

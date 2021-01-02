@@ -64,11 +64,6 @@ class TopPicksFragment : Fragment() {
                     ).show()
                 }
                 is Resource.Loading -> {
-                    Toast.makeText(
-                        requireContext(),
-                        "loading",
-                        Toast.LENGTH_SHORT
-                    ).show()
                 }
             }
         })
@@ -81,52 +76,13 @@ class TopPicksFragment : Fragment() {
                     viewPager.setBackgroundColor(postColors[postColors.size - 1])
                 }
             }
-
             override fun onPageSelected(position: Int) {
             }
-
             override fun onPageScrollStateChanged(state: Int) {
             }
-
         })
-
 
         return view
     }
-
-//    private fun setupViewAdapter() {
-//        postList.add(PhotoPost(R.drawable.viewpageritem1,"Winter Morning...","Conor Luddy",R.drawable.creator1))
-//        postList.add(PhotoPost(R.drawable.viewpageritem2,"Metallic Adventure...","Alex Azabache",R.drawable.creator2))
-//        postList.add(PhotoPost(R.drawable.viewpageritem3,"Liquid Safari...","Nathan Dumlao",R.drawable.creator3))
-//        postList.add(PhotoPost(R.drawable.viewpageritem4,"On top of the world...","Michael Henry",R.drawable.creator4))
-//        postList.add(PhotoPost(R.drawable.viewpageritem5,"Himalayan peace...","Alexander Andrews",R.drawable.creator5))
-//        postList.add(PhotoPost(R.drawable.viewpageritem6,"A lonely walk...","Nicolas Ladino Silva",R.drawable.creator6))
-//
-//        adapter = ViewPagerAdapter(postList,requireContext())
-//        viewPager.adapter = adapter
-//        viewPager.setPadding(50,0,50,0)
-//
-//        postColors = arrayOf(resources.getColor(R.color.postColor1),resources.getColor(R.color.postColor2),
-//                resources.getColor(R.color.postColor3),resources.getColor(R.color.postColor4),resources.getColor(R.color.postColor5),resources.getColor(R.color.postColor6))
-//
-//        viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener{
-//            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-//                if(position< (adapter.count - 1) && position < (postColors.size - 1)){
-//                    viewPager.setBackgroundColor(argbEvaluator.evaluate(positionOffset,postColors[position],postColors[position + 1]) as Int)
-//                } else {
-//                    viewPager.setBackgroundColor(postColors[postColors.size - 1])
-//                }
-//            }
-//
-//            override fun onPageSelected(position: Int) {
-//            }
-//
-//            override fun onPageScrollStateChanged(state: Int) {
-//            }
-//
-//        })
-//
-//
-//    }
 
 }

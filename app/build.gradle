@@ -62,18 +62,9 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.2'
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.2'
 
-    // Room components
-    implementation "androidx.room:room-runtime:2.2.6"
-    kapt "androidx.room:room-compiler:2.2.6"
-    implementation "androidx.room:room-ktx:2.2.6"
-    androidTestImplementation "androidx.room:room-testing:2.2.6"
-
     // Data binding
     kapt "com.android.databinding:compiler:3.2.0-alpha10"
     kapt "androidx.databinding:databinding-common:4.1.1"
-
-    // DataStore
-    implementation "androidx.datastore:datastore-preferences:1.0.0-alpha05"
 
     // Recyclerview
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
@@ -112,7 +103,8 @@ dependencies {
     // Picasso
     implementation 'com.squareup.picasso:picasso:2.71828'
 
-    //Image Editor
-    implementation 'ja.burhanrashid52:photoeditor:1.1.0'
+    //Glide
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
 
 }
