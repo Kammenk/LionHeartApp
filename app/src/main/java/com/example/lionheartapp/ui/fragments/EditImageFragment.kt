@@ -1,21 +1,22 @@
 package com.example.lionheartapp.ui.fragments
 
+import android.content.Context
 import android.content.Intent
-import android.icu.number.NumberFormatter.with
-import android.icu.number.NumberRangeFormatter.with
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
+import android.os.StrictMode
 import android.view.*
 import androidx.fragment.app.Fragment
-import android.widget.Button
 import android.widget.ImageView
-import androidx.core.content.FileProvider
-import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.example.lionheartapp.ImageSetter
 import com.example.lionheartapp.R
-import com.squareup.picasso.Picasso
-import kotlinx.coroutines.launch
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 
 class EditImageFragment : Fragment() {
 
@@ -31,11 +32,15 @@ class EditImageFragment : Fragment() {
     private lateinit var pinkyFilter: ImageView
 
 
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_edit_image, container, false)
+
+        val builder = StrictMode.VmPolicy.Builder()
+        StrictMode.setVmPolicy(builder.build())
 
         setHasOptionsMenu(true)
 
@@ -48,7 +53,7 @@ class EditImageFragment : Fragment() {
         instantFilter = view.findViewById(R.id.instantFilter)
         pinkyFilter = view.findViewById(R.id.pinkyFilter)
 
-        Picasso.get().load(args.currentItem.urls.regular).into(currentImage)
+        currentImage.setImageBitmap(ImageSetter.setImage(args.currentItem.photoUrl))
 
         camFootageFilter.setOnClickListener {
             filterImageView.setImageResource(R.drawable.cam_footage_filter)
@@ -71,16 +76,44 @@ class EditImageFragment : Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.edit_menu,menu)
+        inflater.inflate(R.menu.edit_menu, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.clearFilters){
+        if (item.itemId == R.id.clearFilters) {
             filterImageView.setImageResource(0)
         } else {
             return super.onOptionsItemSelected(item)
         }
         return true
+    }
+
+    //Used to share an image after its been filtered
+    fun shareImage(context: Context, imageView: ImageView) {
+        val myDrawable = imageView.drawable
+        val bitmap = (myDrawable as BitmapDrawable).bitmap
+        val i = Intent(Intent.ACTION_SEND)
+        i.type = "image/*"
+        i.putExtra(Intent.EXTRA_STREAM, getLocalBitmapUri(bitmap, context))
+        context.startActivity(Intent.createChooser(i, "Share Image"))
+
+    }
+
+    fun getLocalBitmapUri(bmp: Bitmap, context: Context): Uri? {
+        var bmpUri: Uri? = null
+        try {
+            val file = File(
+                context.getExternalFilesDir(Environment.DIRECTORY_PICTURES),
+                "share_image_" + System.currentTimeMillis() + ".png"
+            )
+            val out = FileOutputStream(file)
+            bmp.compress(Bitmap.CompressFormat.PNG, 90, out)
+            out.close()
+            bmpUri = Uri.fromFile(file)
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+        return bmpUri
     }
 
 

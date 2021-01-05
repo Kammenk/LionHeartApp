@@ -1,13 +1,10 @@
 package com.example.lionheartapp.repository
 
-import com.example.lionheartapp.data.RemoteDataSource
-import dagger.hilt.android.scopes.ActivityRetainedScoped
-import javax.inject.Inject
+import com.example.lionheartapp.api.RemoteAccess
 
-@ActivityRetainedScoped
-class Repository @Inject constructor(
-    remoteDataSource: RemoteDataSource
+class Repository(
+    remoteAccess: RemoteAccess
 ) {
 
-    val remote = remoteDataSource
+    val remoteAccess = remoteAccess
 }

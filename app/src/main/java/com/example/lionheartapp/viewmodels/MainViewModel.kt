@@ -4,74 +4,71 @@ import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.lionheartapp.models.Photos
-import com.example.lionheartapp.models.PhotosItem
+import com.example.lionheartapp.api.RemoteAccess
+import com.example.lionheartapp.models.PhotoItem
 import com.example.lionheartapp.repository.Repository
-import com.example.lionheartapp.util.Resource
 import kotlinx.coroutines.launch
-import retrofit2.Response
 import java.lang.Exception
 
-class MainViewModel @ViewModelInject constructor (
-    private val repository: Repository,
-    application: Application): AndroidViewModel(application) {
+class MainViewModel(application: Application) : AndroidViewModel(application) {
 
-        var photosResponse: MutableLiveData<Resource<ArrayList<PhotosItem>>> = MutableLiveData()
+    var photosResponse: MutableLiveData<ArrayList<PhotoItem>> = MutableLiveData()
 
-        fun getPhotos(page: Int, limit: Int, clientID: String) = viewModelScope.launch {
-            getPhotosSafeCall(page,limit,clientID)
-        }
-
-    private suspend fun getPhotosSafeCall(page: Int, limit: Int, clientID: String) {
-        if(hasInternetConnection()){
-            return try{
-                val response = repository.remote.getPhotos(page,limit,clientID)
-                photosResponse.value = handlePhotosResponse(response)
-            } catch (e: Exception){
-                println(e.message)
-                photosResponse.value = Resource.Error("No Photos Found")
-            }
-        } else {
-            photosResponse.value = Resource.Error("No Internet Connection.")
-        }
+    fun getPhotos(url: String, page: Int, limit: Int, clientID: String) = viewModelScope.launch {
+        getPhotosSafeCall(url, page, limit, clientID)
     }
 
-    private fun handlePhotosResponse(response: Response<ArrayList<PhotosItem>>): Resource<ArrayList<PhotosItem>>? {
-        when {
-            response.message().toString().contains("timeout") -> {
-                return Resource.Error("Timeout")
-            }
-            response.code() == 402 ->{
-                return Resource.Error("API Key Limited")
-            }
-            response.body().isNullOrEmpty() -> {
-                return Resource.Error("Photos not found")
-            }
-            response.isSuccessful -> {
-                val photos = response.body()
-                return  Resource.Success(photos!!)
-            }
-            else -> {
-                return Resource.Error(response.message())
+    private suspend fun getPhotosSafeCall(url: String, page: Int, limit: Int, clientID: String) {
+        if (hasInternetConnection()) {
+            return try {
+                val remoteAccess = RemoteAccess()
+                val repository = Repository(remoteAccess)
+                val response = repository.remoteAccess.getPhotos(url, page, limit, clientID)
+                photosResponse.value = response
+                println("printing from viewmodel = $response")
+            } catch (e: Exception) {
+                println("in catch")
+                println(e.printStackTrace())
             }
         }
     }
 
-    private fun hasInternetConnection(): Boolean{
-            val connectivityManager = getApplication<Application>().getSystemService(
-                Context.CONNECTIVITY_SERVICE
-            ) as ConnectivityManager
-            val activeNetwork = connectivityManager.activeNetwork ?: return false
-            val capabilities = connectivityManager.getNetworkCapabilities(activeNetwork) ?: return false
-            return when{
-                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
-                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
-                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
-                else -> false
-            }
+//    private fun handlePhotosResponse(response: ArrayList<PhotoItem>): Resource<ArrayList<PhotosItem>>? {
+//        when {
+//            response
+//            response.message().toString().contains("timeout") -> {
+//                return Resource.Error("Timeout")
+//            }
+//            response.code() == 402 ->{
+//                return Resource.Error("API Key Limited")
+//            }
+//            response.body().isNullOrEmpty() -> {
+//                return Resource.Error("Photos not found")
+//            }
+//            response.isSuccessful -> {
+//                val photos = response.body()
+//                return  Resource.Success(photos!!)
+//            }
+//            else -> {
+//                return Resource.Error(response.message())
+//            }
+//        }
+//    }
+
+    private fun hasInternetConnection(): Boolean {
+        val connectivityManager = getApplication<Application>().getSystemService(
+            Context.CONNECTIVITY_SERVICE
+        ) as ConnectivityManager
+        val activeNetwork = connectivityManager.activeNetwork ?: return false
+        val capabilities = connectivityManager.getNetworkCapabilities(activeNetwork) ?: return false
+        return when {
+            capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
+            capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+            capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
+            else -> false
         }
+    }
 }

@@ -30,7 +30,7 @@ class SharableFragment : Fragment(), View.OnClickListener {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view =  inflater.inflate(R.layout.fragment_sharable, container, false)
+        val view = inflater.inflate(R.layout.fragment_sharable, container, false)
 
         val builder = VmPolicy.Builder()
         StrictMode.setVmPolicy(builder.build())
@@ -52,7 +52,7 @@ class SharableFragment : Fragment(), View.OnClickListener {
 
     override fun onClick(p0: View?) {
         if (p0 != null) {
-            when(p0.id){
+            when (p0.id) {
                 R.id.sharableImageOne -> {
                     shareImage("sharableone.jpg", sharableOne)
                 }
@@ -72,7 +72,7 @@ class SharableFragment : Fragment(), View.OnClickListener {
         }
     }
 
-    private fun shareImage(imagePath: String, imageView: ImageView){
+    private fun shareImage(imagePath: String, imageView: ImageView) {
         //share image
         try {
             val myDrawable = imageView.drawable

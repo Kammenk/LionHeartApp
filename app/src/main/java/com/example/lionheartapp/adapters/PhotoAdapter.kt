@@ -4,22 +4,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.example.lionheartapp.ImageSetter
 import com.example.lionheartapp.R
-import com.example.lionheartapp.models.PhotosItem
+import com.example.lionheartapp.models.PhotoItem
 import com.example.lionheartapp.ui.fragments.PhotoListFragmentDirections
-import com.squareup.picasso.Picasso
 
-class PhotoAdapter: RecyclerView.Adapter<PhotoAdapter.MyViewHolder>() {
+class PhotoAdapter : RecyclerView.Adapter<PhotoAdapter.MyViewHolder>() {
 
-    private var photoList = emptyList<PhotosItem>()
+    private var photoList = emptyList<PhotoItem>()
 
-    class MyViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+    class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     }
 
@@ -35,11 +33,11 @@ class PhotoAdapter: RecyclerView.Adapter<PhotoAdapter.MyViewHolder>() {
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentItem = photoList[position]
-
         val image = holder.itemView.findViewById<ImageView>(R.id.photoImage)
-        Picasso.get().load(currentItem.urls.small).fit().centerInside().into(image)
+        image.setImageBitmap(ImageSetter.setImage(currentItem.photoUrl))
         holder.itemView.findViewById<CardView>(R.id.photoItem).setOnClickListener {
-            val action = PhotoListFragmentDirections.actionPhotoListFragmentToDetailFragment(currentItem)
+            val action =
+                PhotoListFragmentDirections.actionPhotoListFragmentToDetailFragment(currentItem)
             holder.itemView.findNavController().navigate(action)
         }
     }
@@ -48,7 +46,7 @@ class PhotoAdapter: RecyclerView.Adapter<PhotoAdapter.MyViewHolder>() {
         return photoList.size
     }
 
-    fun setData(newData: ArrayList<PhotosItem>){
+    fun setData(newData: ArrayList<PhotoItem>) {
         val photosDiffUtil = PhotosDiffUtil(photoList, newData)
         val diffUtilResult = DiffUtil.calculateDiff(photosDiffUtil)
         photoList = newData

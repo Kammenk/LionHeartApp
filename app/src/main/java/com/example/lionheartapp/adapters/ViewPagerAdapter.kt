@@ -1,27 +1,26 @@
 package com.example.lionheartapp.adapters
 
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.navigation.findNavController
 import androidx.viewpager.widget.PagerAdapter
 import com.example.lionheartapp.R
-import com.example.lionheartapp.models.PhotoPost
-import com.example.lionheartapp.models.PhotosItem
-import com.example.lionheartapp.ui.fragments.PhotoListFragmentDirections
+import com.example.lionheartapp.models.PhotoItem
 import com.example.lionheartapp.ui.fragments.TopPicksFragmentDirections
-import com.squareup.picasso.Picasso
-import org.w3c.dom.Text
+import java.io.InputStream
+import java.net.URL
 import java.util.ArrayList
 
 class ViewPagerAdapter(
-        aList: ArrayList<PhotosItem>,
-        context: Context
-): PagerAdapter() {
+    aList: ArrayList<PhotoItem>,
+    context: Context
+) : PagerAdapter() {
 
     private var postList = aList
     private var context = context
@@ -37,20 +36,29 @@ class ViewPagerAdapter(
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
         layoutInflater = LayoutInflater.from(context)
-        val view = layoutInflater.inflate(R.layout.view_pager_item,container,false)
+        val view = layoutInflater.inflate(R.layout.view_pager_item, container, false)
 
         var postImage = view.findViewById<ImageView>(R.id.viewPagerImage)
         var postCreator = view.findViewById<TextView>(R.id.viewPagerCreator)
         var postCreatorImage = view.findViewById<ImageView>(R.id.viewPagerCreatorImage)
+        val photoInputStream: InputStream
+        val creatorInputStream: InputStream
+        val photoBitmap: Bitmap
+        val creatorBitmap: Bitmap
 
-        Picasso.get().load(postList[position].urls.small).fit().centerInside().into(postImage)
-        postCreator.text = postList[position].user.name
-        Picasso.get().load(postList[position].user.profileImage.small).fit().centerInside().into(postCreatorImage)
 
-        container.addView(view,0)
+        photoInputStream = URL(postList[position].photoUrl).openStream()
+        photoBitmap = BitmapFactory.decodeStream(photoInputStream)
+        postImage.setImageBitmap(photoBitmap)
+        postCreator.text = postList[position].photoCreatorName
+        creatorInputStream = URL(postList[position].photoCreatorImage).openStream()
+        creatorBitmap = BitmapFactory.decodeStream(creatorInputStream)
+        postCreatorImage.setImageBitmap(creatorBitmap)
+        container.addView(view, 0)
 
         view.setOnClickListener {
-            val action = TopPicksFragmentDirections.actionTopPicksFragmentToDetailFragment(postList[position])
+            val action =
+                TopPicksFragmentDirections.actionTopPicksFragmentToDetailFragment(postList[position])
             view.findNavController().navigate(action)
 
         }
