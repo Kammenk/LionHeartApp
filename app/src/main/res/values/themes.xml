@@ -25,5 +25,6 @@
     <style name="circleImageViewStyle" >
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item>
+        <item name="backgroundColor">#191919</item>
     </style>
 </resources>

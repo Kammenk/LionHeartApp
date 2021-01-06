@@ -28,35 +28,11 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 val repository = Repository(remoteAccess)
                 val response = repository.remoteAccess.getPhotos(url, page, limit, clientID)
                 photosResponse.value = response
-                println("printing from viewmodel = $response")
             } catch (e: Exception) {
-                println("in catch")
                 println(e.printStackTrace())
             }
         }
     }
-
-//    private fun handlePhotosResponse(response: ArrayList<PhotoItem>): Resource<ArrayList<PhotosItem>>? {
-//        when {
-//            response
-//            response.message().toString().contains("timeout") -> {
-//                return Resource.Error("Timeout")
-//            }
-//            response.code() == 402 ->{
-//                return Resource.Error("API Key Limited")
-//            }
-//            response.body().isNullOrEmpty() -> {
-//                return Resource.Error("Photos not found")
-//            }
-//            response.isSuccessful -> {
-//                val photos = response.body()
-//                return  Resource.Success(photos!!)
-//            }
-//            else -> {
-//                return Resource.Error(response.message())
-//            }
-//        }
-//    }
 
     private fun hasInternetConnection(): Boolean {
         val connectivityManager = getApplication<Application>().getSystemService(

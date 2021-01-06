@@ -1,6 +1,5 @@
 package com.example.lionheartapp.ui.fragments
 
-
 import android.os.Bundle
 import android.os.StrictMode
 import android.view.*

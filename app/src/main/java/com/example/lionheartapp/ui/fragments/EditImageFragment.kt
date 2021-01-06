@@ -9,27 +9,28 @@ import android.os.Bundle
 import android.os.Environment
 import android.os.StrictMode
 import android.view.*
-import androidx.fragment.app.Fragment
 import android.widget.ImageView
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import com.example.lionheartapp.ImageSetter
 import com.example.lionheartapp.R
+import com.example.lionheartapp.filters.Filters
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 
-class EditImageFragment : Fragment() {
+class EditImageFragment : Fragment(), View.OnClickListener {
 
     private val args by navArgs<EditImageFragmentArgs>()
     private lateinit var currentImage: ImageView
-    private lateinit var filterImageView: ImageView
 
     //Filters
-    private lateinit var camFootageFilter: ImageView
-    private lateinit var distortedFilter: ImageView
-    private lateinit var hueFilter: ImageView
-    private lateinit var instantFilter: ImageView
-    private lateinit var pinkyFilter: ImageView
+    private lateinit var noFilter: ImageView
+    private lateinit var starLitFilter: ImageView
+    private lateinit var blueMessFilter: ImageView
+    private lateinit var aweStruckVibeFilter: ImageView
+    private lateinit var limeStutterFilter: ImageView
+    private lateinit var nightWhisperFilter: ImageView
 
 
     override fun onCreateView(
@@ -45,34 +46,35 @@ class EditImageFragment : Fragment() {
         setHasOptionsMenu(true)
 
         currentImage = view.findViewById(R.id.currentPhoto)
-        filterImageView = view.findViewById(R.id.filterImage)
 
-        camFootageFilter = view.findViewById(R.id.camFootageFilter)
-        distortedFilter = view.findViewById(R.id.distortedFilter)
-        hueFilter = view.findViewById(R.id.hueFilter)
-        instantFilter = view.findViewById(R.id.instantFilter)
-        pinkyFilter = view.findViewById(R.id.pinkyFilter)
+        noFilter = view.findViewById(R.id.noFilter)
+        starLitFilter = view.findViewById(R.id.starLitFilter)
+        blueMessFilter = view.findViewById(R.id.blueMessFilter)
+        aweStruckVibeFilter = view.findViewById(R.id.aweStruckVibeFilter)
+        limeStutterFilter = view.findViewById(R.id.limeStutterFilter)
+        nightWhisperFilter = view.findViewById(R.id.nightWhisperFilter)
 
-        currentImage.setImageBitmap(ImageSetter.setImage(args.currentItem.photoUrl))
-
-        camFootageFilter.setOnClickListener {
-            filterImageView.setImageResource(R.drawable.cam_footage_filter)
-        }
-
-        distortedFilter.setOnClickListener {
-            filterImageView.setImageResource(R.drawable.distorted_filter)
-        }
-        hueFilter.setOnClickListener {
-            filterImageView.setImageResource(R.drawable.hue_filter)
-        }
-        instantFilter.setOnClickListener {
-            filterImageView.setImageResource(R.drawable.instant_filter)
-        }
-        pinkyFilter.setOnClickListener {
-            filterImageView.setImageResource(R.drawable.pinky_filter)
-        }
+        bindImages()
+        filterSetup()
+        noFilter.setOnClickListener(this)
+        starLitFilter.setOnClickListener(this)
+        blueMessFilter.setOnClickListener(this)
+        aweStruckVibeFilter.setOnClickListener(this)
+        limeStutterFilter.setOnClickListener(this)
+        nightWhisperFilter.setOnClickListener(this)
 
         return view
+    }
+
+    private fun bindImages() {
+        currentImage.setImageBitmap(ImageSetter.setImage(args.currentItem.photoUrl))
+
+        noFilter.setImageBitmap(ImageSetter.setImage(args.currentItem.photoUrl))
+        starLitFilter.setImageBitmap(ImageSetter.setImage(args.currentItem.photoUrl))
+        blueMessFilter.setImageBitmap(ImageSetter.setImage(args.currentItem.photoUrl))
+        aweStruckVibeFilter.setImageBitmap(ImageSetter.setImage(args.currentItem.photoUrl))
+        limeStutterFilter.setImageBitmap(ImageSetter.setImage(args.currentItem.photoUrl))
+        nightWhisperFilter.setImageBitmap(ImageSetter.setImage(args.currentItem.photoUrl))
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -80,26 +82,36 @@ class EditImageFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.clearFilters) {
-            filterImageView.setImageResource(0)
-        } else {
-            return super.onOptionsItemSelected(item)
+
+        when (item.itemId) {
+            R.id.shareEditedImage -> {
+                shareImage(requireContext(), currentImage)
+            }
+            R.id.downloadEditedImage -> {
+                saveImageOnDevice(currentImage)
+            }
+            else -> {
+                return super.onOptionsItemSelected(item)
+            }
         }
         return true
     }
 
+    private fun saveImageOnDevice(imageView: ImageView) {
+
+    }
+
     //Used to share an image after its been filtered
-    fun shareImage(context: Context, imageView: ImageView) {
+    private fun shareImage(context: Context, imageView: ImageView) {
         val myDrawable = imageView.drawable
         val bitmap = (myDrawable as BitmapDrawable).bitmap
         val i = Intent(Intent.ACTION_SEND)
         i.type = "image/*"
         i.putExtra(Intent.EXTRA_STREAM, getLocalBitmapUri(bitmap, context))
         context.startActivity(Intent.createChooser(i, "Share Image"))
-
     }
 
-    fun getLocalBitmapUri(bmp: Bitmap, context: Context): Uri? {
+    private fun getLocalBitmapUri(bmp: Bitmap, context: Context): Uri? {
         var bmpUri: Uri? = null
         try {
             val file = File(
@@ -116,5 +128,40 @@ class EditImageFragment : Fragment() {
         return bmpUri
     }
 
+    override fun onClick(p0: View?) {
+        when (p0!!.id) {
+            R.id.noFilter -> {
+                currentImage.setImageBitmap(ImageSetter.setImage(args.currentItem.photoUrl))
+            }
+            R.id.starLitFilter -> {
+                currentImage.setImageBitmap(ImageSetter.setImage(args.currentItem.photoUrl))
+                Filters.applyStarLitFilter(currentImage)
+            }
+            R.id.blueMessFilter -> {
+                currentImage.setImageBitmap(ImageSetter.setImage(args.currentItem.photoUrl))
+                Filters.applyBlueMessFilter(currentImage)
+            }
+            R.id.aweStruckVibeFilter -> {
+                currentImage.setImageBitmap(ImageSetter.setImage(args.currentItem.photoUrl))
+                Filters.applyAweStruckVibeFilter(currentImage)
+            }
+            R.id.limeStutterFilter -> {
+                currentImage.setImageBitmap(ImageSetter.setImage(args.currentItem.photoUrl))
+                Filters.applyLimeStutterFilter(currentImage)
+            }
+            R.id.nightWhisperFilter -> {
+                currentImage.setImageBitmap(ImageSetter.setImage(args.currentItem.photoUrl))
+                Filters.applyNightWhisperFilter(currentImage)
+            }
+        }
+    }
+
+    private fun filterSetup() {
+        Filters.applyStarLitFilter(starLitFilter)
+        Filters.applyBlueMessFilter(blueMessFilter)
+        Filters.applyAweStruckVibeFilter(aweStruckVibeFilter)
+        Filters.applyLimeStutterFilter(limeStutterFilter)
+        Filters.applyNightWhisperFilter(nightWhisperFilter)
+    }
 
 }

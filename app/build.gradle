@@ -73,8 +73,5 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0"
 
     //Photo Filter
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'info.androidhive:imagefilters:1.0.7'
-
-
+    implementation 'com.github.zomato:androidphotofilters:1.0.2'
 }

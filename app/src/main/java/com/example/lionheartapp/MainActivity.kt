@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
         setTheme(R.style.Theme_LionHeartApp)
         setContentView(R.layout.activity_main)
 
-        System.loadLibrary("NativeImageProcessor");
+        System.loadLibrary("NativeImageProcessor")
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView)
 

@@ -5,8 +5,8 @@ import android.os.StrictMode
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.lionheartapp.R
@@ -15,18 +15,12 @@ import com.example.lionheartapp.api.RemoteAccess
 import com.example.lionheartapp.util.Constants.Companion.ACCESS_KEY
 import com.example.lionheartapp.util.Constants.Companion.BASE_URL
 import com.example.lionheartapp.viewmodels.MainViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-
 
 class PhotoListFragment : Fragment() {
 
     private lateinit var photosAdapter: PhotoAdapter
     private lateinit var mainViewModel: MainViewModel
     private lateinit var photosRecyclerView: RecyclerView
-    private lateinit var progressBar: ProgressBar
     private lateinit var remoteAccess: RemoteAccess
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -46,18 +40,12 @@ class PhotoListFragment : Fragment() {
         StrictMode.setThreadPolicy(policy)
         photosRecyclerView = view.findViewById(R.id.photoRecyclerView)
         remoteAccess = RemoteAccess()
-        // mainViewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
-        GlobalScope.launch(Dispatchers.IO) {
-            var response = remoteAccess.getPhotos("$BASE_URL", 1, 20, ACCESS_KEY)
-            withContext(Dispatchers.Main) {
-                photosAdapter.setData(response)
+        mainViewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
+        mainViewModel.getPhotos(BASE_URL, 1, 20, ACCESS_KEY)
 
-            }
-        }
-//            mainViewModel.photosResponse.observe(viewLifecycleOwner, { response ->
-//                println("data from api $response")
-//            }
-//            )
+        mainViewModel.photosResponse.observe(viewLifecycleOwner, { response ->
+            photosAdapter.setData(response)
+        })
 
         setupRecyclerView()
         return view
@@ -70,5 +58,4 @@ class PhotoListFragment : Fragment() {
             layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         }
     }
-
 }

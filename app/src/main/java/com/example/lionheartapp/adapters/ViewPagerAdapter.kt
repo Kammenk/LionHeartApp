@@ -31,27 +31,24 @@ class ViewPagerAdapter(
     }
 
     override fun isViewFromObject(view: View, `object`: Any): Boolean {
-        return view.equals(`object`)
+        return view == `object`
     }
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
         layoutInflater = LayoutInflater.from(context)
         val view = layoutInflater.inflate(R.layout.view_pager_item, container, false)
 
-        var postImage = view.findViewById<ImageView>(R.id.viewPagerImage)
-        var postCreator = view.findViewById<TextView>(R.id.viewPagerCreator)
-        var postCreatorImage = view.findViewById<ImageView>(R.id.viewPagerCreatorImage)
-        val photoInputStream: InputStream
-        val creatorInputStream: InputStream
+        val postImage = view.findViewById<ImageView>(R.id.viewPagerImage)
+        val postCreator = view.findViewById<TextView>(R.id.viewPagerCreator)
+        val postCreatorImage = view.findViewById<ImageView>(R.id.viewPagerCreatorImage)
         val photoBitmap: Bitmap
         val creatorBitmap: Bitmap
 
-
-        photoInputStream = URL(postList[position].photoUrl).openStream()
+        val photoInputStream: InputStream = URL(postList[position].photoUrl).openStream()
         photoBitmap = BitmapFactory.decodeStream(photoInputStream)
         postImage.setImageBitmap(photoBitmap)
         postCreator.text = postList[position].photoCreatorName
-        creatorInputStream = URL(postList[position].photoCreatorImage).openStream()
+        val creatorInputStream: InputStream = URL(postList[position].photoCreatorImage).openStream()
         creatorBitmap = BitmapFactory.decodeStream(creatorInputStream)
         postCreatorImage.setImageBitmap(creatorBitmap)
         container.addView(view, 0)

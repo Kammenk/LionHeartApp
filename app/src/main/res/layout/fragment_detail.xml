@@ -19,7 +19,8 @@
         android:scaleType="centerCrop"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:contentDescription="@string/mainimage" />
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/detailedCreatorImage"
@@ -37,7 +38,7 @@
         android:id="@+id/detailedCreatorName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Creator name"
+        android:text="@string/creator_name"
         android:textSize="20sp"
         android:textStyle="bold"
         android:layout_marginTop="20dp"
@@ -51,7 +52,7 @@
         android:id="@+id/detailPreBio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Bio: "
+        android:text="@string/bio"
         android:textSize="18sp"
 
         android:layout_margin="10dp"
@@ -63,7 +64,7 @@
         android:id="@+id/detailedDesc"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="This is the desc"
+        android:text="@string/this_is_the_desc"
         android:textSize="19sp"
         android:maxLines="2"
 
@@ -83,13 +84,13 @@
 
         app:layout_constraintTop_toBottomOf="@id/detailedImage"
         app:layout_constraintStart_toStartOf="parent"
-        />
+        android:contentDescription="@string/likeimage" />
 
     <TextView
         android:id="@+id/detailedLikes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="10 likes"
+        android:text="@string/_10_likes"
 
         android:layout_marginHorizontal="5dp"
         android:layout_marginVertical="10dp"
