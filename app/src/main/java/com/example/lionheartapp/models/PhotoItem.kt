@@ -9,5 +9,6 @@ data class PhotoItem(
     val photoCreatorImage: String,
     val photoDescription: String,
     val photoLikes: Int,
-    val photoUrl: String
+    val photoUrlRegular: String,
+    val photoUrlSmall: String
 ): Parcelable

@@ -32,7 +32,7 @@ class PhotoAdapter : RecyclerView.Adapter<PhotoAdapter.MyViewHolder>() {
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentItem = photoList[position]
         val image = holder.itemView.findViewById<ImageView>(R.id.photoImage)
-        image.setImageBitmap(ImageSetter.setImage(currentItem.photoUrl))
+        image.setImageBitmap(ImageSetter.setImage(currentItem.photoUrlSmall))
         holder.itemView.findViewById<CardView>(R.id.photoItem).setOnClickListener {
             val action =
                 PhotoListFragmentDirections.actionPhotoListFragmentToDetailFragment(currentItem)

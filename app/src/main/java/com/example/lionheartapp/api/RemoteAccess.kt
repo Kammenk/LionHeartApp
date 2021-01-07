@@ -17,7 +17,6 @@ class RemoteAccess : PhotosAPI {
         clientID: String
     ): ArrayList<PhotoItem> {
         val completeURL = "$url?page=$page&per_page=$limit&client_id=$clientID"
-        println("this is the complete url $completeURL")
         val resultURL = withContext(Dispatchers.IO){
             (URL(completeURL).readText())}
         val jsonArray = JSONArray(resultURL)
@@ -33,7 +32,8 @@ class RemoteAccess : PhotosAPI {
                         .getJSONObject("profile_image").getString("small"),
                     photoDescription = jsonObject.getString("alt_description"),
                     photoLikes = jsonObject.getString("likes").toInt(),
-                    photoUrl = jsonObject.getJSONObject("urls").getString("regular")
+                    photoUrlRegular = jsonObject.getJSONObject("urls").getString("regular"),
+                    photoUrlSmall = jsonObject.getJSONObject("urls").getString("small")
                 )
             )
 

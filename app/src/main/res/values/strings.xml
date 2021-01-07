@@ -2,6 +2,7 @@
     <string name="app_name">LionHeartApp</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="likes">likes</string>
     <string name="categories">Categories</string>
     <string name="events">Events</string>
     <string name="gallery">Gallery</string>
@@ -16,7 +17,7 @@
     <string name="imageofpeople">imageOfPeople</string>
     <string name="mainimage">mainImage</string>
     <string name="creator_name">Creator name</string>
-    <string name="bio">Bio:</string>
+    <string name="bio">Bio: </string>
     <string name="this_is_the_desc">This is the desc</string>
     <string name="likeimage">likeImage</string>
     <string name="_10_likes">10 likes</string>
@@ -37,4 +38,9 @@
     <string name="pagerimage">pagerImage</string>
     <string name="by_timothy_timothy_timothy">by Timothy Timothy Timothy</string>
     <string name="creatorimage">creatorImage</string>
+    <string name="filters">Filters</string>
+    <string name="customize">Customize</string>
+    <string name="brightness">Brightness</string>
+    <string name="contrast">Contrast</string>
+    <string name="saturation">Saturation</string>
 </resources>

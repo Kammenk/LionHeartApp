@@ -17,6 +17,7 @@ import com.example.lionheartapp.models.PhotoItem
 import com.example.lionheartapp.util.Constants
 import com.example.lionheartapp.util.Constants.Companion.BASE_URL
 import com.example.lionheartapp.viewmodels.MainViewModel
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 import java.util.ArrayList
 
@@ -29,6 +30,7 @@ class TopPicksFragment : Fragment() {
     private lateinit var postList: ArrayList<PhotoItem>
     private lateinit var mainViewModel: MainViewModel
     private lateinit var remoteAccess: RemoteAccess
+    private lateinit var bottomNavigationView: BottomNavigationView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,6 +38,13 @@ class TopPicksFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_top_picks, container, false)
+
+        bottomNavigationView = requireActivity().findViewById(R.id.bottomNavigationView)
+        if(bottomNavigationView.visibility != View.VISIBLE) {
+            bottomNavigationView.visibility =
+                View.VISIBLE
+        }
+
         postList = ArrayList<PhotoItem>(emptyList())
         viewPager = view.findViewById(R.id.viewPager)
         remoteAccess = RemoteAccess()

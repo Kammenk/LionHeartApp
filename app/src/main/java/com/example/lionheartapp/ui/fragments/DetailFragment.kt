@@ -1,15 +1,18 @@
 package com.example.lionheartapp.ui.fragments
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.StrictMode
 import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.lionheartapp.ImageSetter
 import com.example.lionheartapp.R
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class DetailFragment : Fragment() {
 
@@ -20,6 +23,7 @@ class DetailFragment : Fragment() {
     private lateinit var detailCreatorImage: ImageView
     private lateinit var detailLikes: TextView
 
+    @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -30,6 +34,8 @@ class DetailFragment : Fragment() {
         val builder = StrictMode.VmPolicy.Builder()
         StrictMode.setVmPolicy(builder.build())
 
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).visibility = View.GONE
+        (activity as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         setHasOptionsMenu(true)
 
         detailImage = view.findViewById(R.id.detailedImage)
@@ -37,8 +43,9 @@ class DetailFragment : Fragment() {
         detailCreatorName = view.findViewById(R.id.detailedCreatorName)
         detailCreatorImage = view.findViewById(R.id.detailedCreatorImage)
         detailLikes = view.findViewById(R.id.detailedLikes)
-        detailImage.setImageBitmap(ImageSetter.setImage(args.currentItem.photoUrl))
-        detailDesc.text = args.currentItem.photoDescription
+
+        detailImage.setImageBitmap(ImageSetter.setImage(args.currentItem.photoUrlRegular))
+        detailDesc.text = if(args.currentItem.photoDescription.isEmpty() || args.currentItem.photoDescription.isBlank()) "The creator is yet to add a meaningful description" else args.currentItem.photoDescription
         detailCreatorName.text = args.currentItem.photoCreatorName
         detailCreatorImage.setImageBitmap(ImageSetter.setImage(args.currentItem.photoCreatorImage))
         detailLikes.text = "${args.currentItem.photoLikes} likes"
@@ -60,6 +67,4 @@ class DetailFragment : Fragment() {
         }
         return true
     }
-
-
 }

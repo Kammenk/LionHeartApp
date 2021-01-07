@@ -15,6 +15,7 @@ import com.example.lionheartapp.api.RemoteAccess
 import com.example.lionheartapp.util.Constants.Companion.ACCESS_KEY
 import com.example.lionheartapp.util.Constants.Companion.BASE_URL
 import com.example.lionheartapp.viewmodels.MainViewModel
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class PhotoListFragment : Fragment() {
 
@@ -22,6 +23,7 @@ class PhotoListFragment : Fragment() {
     private lateinit var mainViewModel: MainViewModel
     private lateinit var photosRecyclerView: RecyclerView
     private lateinit var remoteAccess: RemoteAccess
+    private lateinit var bottomNavigationView: BottomNavigationView
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -38,6 +40,13 @@ class PhotoListFragment : Fragment() {
 
         val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
         StrictMode.setThreadPolicy(policy)
+
+        bottomNavigationView = requireActivity().findViewById(R.id.bottomNavigationView)
+        if(bottomNavigationView.visibility != View.VISIBLE) {
+            bottomNavigationView.visibility =
+                View.VISIBLE
+        }
+
         photosRecyclerView = view.findViewById(R.id.photoRecyclerView)
         remoteAccess = RemoteAccess()
         mainViewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
@@ -55,7 +64,9 @@ class PhotoListFragment : Fragment() {
         photosAdapter = PhotoAdapter()
         photosRecyclerView.apply {
             adapter = photosAdapter
+            this.setItemViewCacheSize(20)
             layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         }
+        photosRecyclerView.setHasFixedSize(true)
     }
 }

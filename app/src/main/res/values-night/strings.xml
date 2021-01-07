@@ -28,4 +28,9 @@
     <string name="pagerimage">pagerImage</string>
     <string name="by_timothy_timothy_timothy">by Timothy Timothy Timothy</string>
     <string name="creatorimage">creatorImage</string>
+    <string name="filters">Filters</string>
+    <string name="customize">Customize</string>
+    <string name="brightness">Brightness</string>
+    <string name="contrast">Contrast</string>
+    <string name="saturation">Saturation</string>
 </resources>

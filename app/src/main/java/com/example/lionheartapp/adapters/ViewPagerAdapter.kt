@@ -19,11 +19,11 @@ import java.util.ArrayList
 
 class ViewPagerAdapter(
     aList: ArrayList<PhotoItem>,
-    context: Context
+    private var context: Context
 ) : PagerAdapter() {
 
     private var postList = aList
-    private var context = context
+    //private var context = context
     private lateinit var layoutInflater: LayoutInflater
 
     override fun getCount(): Int {
@@ -44,7 +44,7 @@ class ViewPagerAdapter(
         val photoBitmap: Bitmap
         val creatorBitmap: Bitmap
 
-        val photoInputStream: InputStream = URL(postList[position].photoUrl).openStream()
+        val photoInputStream: InputStream = URL(postList[position].photoUrlRegular).openStream()
         photoBitmap = BitmapFactory.decodeStream(photoInputStream)
         postImage.setImageBitmap(photoBitmap)
         postCreator.text = postList[position].photoCreatorName
