@@ -20,6 +20,7 @@ class PhotoAdapter : RecyclerView.Adapter<PhotoAdapter.MyViewHolder>() {
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
+        //Used to inflate the item which will be used as a holder for each of our items
         return MyViewHolder(
             LayoutInflater.from(parent.context).inflate(
                 R.layout.photo_post,
@@ -30,9 +31,11 @@ class PhotoAdapter : RecyclerView.Adapter<PhotoAdapter.MyViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+        //Binding the data we were provided to the items in the view
         val currentItem = photoList[position]
         val image = holder.itemView.findViewById<ImageView>(R.id.photoImage)
-        image.setImageBitmap(ImageSetter.setImage(currentItem.photoUrlSmall))
+        println("current image ${currentItem.photoUrlSmall}")
+        image.setImageBitmap(ImageSetter.setImage(currentItem.photoUrlSmall.toString()))
         holder.itemView.findViewById<CardView>(R.id.photoItem).setOnClickListener {
             val action =
                 PhotoListFragmentDirections.actionPhotoListFragmentToDetailFragment(currentItem)
@@ -45,6 +48,7 @@ class PhotoAdapter : RecyclerView.Adapter<PhotoAdapter.MyViewHolder>() {
     }
 
     fun setData(newData: ArrayList<PhotoItem>) {
+        //Used to add data to our recyclerview, we're using diff util as it loads only the necessary data
         val photosDiffUtil = PhotosDiffUtil(photoList, newData)
         val diffUtilResult = DiffUtil.calculateDiff(photosDiffUtil)
         photoList = newData

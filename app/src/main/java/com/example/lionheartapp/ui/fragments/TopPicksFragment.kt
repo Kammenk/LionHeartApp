@@ -18,11 +18,13 @@ import com.example.lionheartapp.util.Constants
 import com.example.lionheartapp.util.Constants.Companion.BASE_URL
 import com.example.lionheartapp.viewmodels.MainViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.snackbar.Snackbar
 
 import java.util.ArrayList
 
 class TopPicksFragment : Fragment() {
 
+    //Variables
     private lateinit var viewPager: ViewPager
     private lateinit var adapter: PagerAdapter
     private lateinit var postColors: Array<Int>
@@ -39,8 +41,9 @@ class TopPicksFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_top_picks, container, false)
 
+        //Hiding/showing bottom navigation
         bottomNavigationView = requireActivity().findViewById(R.id.bottomNavigationView)
-        if(bottomNavigationView.visibility != View.VISIBLE) {
+        if (bottomNavigationView.visibility != View.VISIBLE) {
             bottomNavigationView.visibility =
                 View.VISIBLE
         }
@@ -52,8 +55,10 @@ class TopPicksFragment : Fragment() {
         mainViewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
         mainViewModel.getPhotos(BASE_URL, 2, 10, Constants.ACCESS_KEY)
 
+        //Viewpager customization
         viewPager.setPadding(50, 0, 50, 0)
 
+        //Used to provide colors for the generated images
         postColors = arrayOf(
             ContextCompat.getColor(requireContext(), R.color.postColor1),
             ContextCompat.getColor(requireContext(), R.color.postColor2),
@@ -72,6 +77,7 @@ class TopPicksFragment : Fragment() {
             viewPager.adapter = adapter
         })
 
+        //On swipe we get a new color and apply it
         viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrolled(
                 position: Int,
@@ -97,6 +103,21 @@ class TopPicksFragment : Fragment() {
             override fun onPageScrollStateChanged(state: Int) {
             }
         })
+        //if there is no internet we display the snackbar
+        if (!mainViewModel.hasInternetConnection()) {
+            showSnackBar()
+        }
         return view
+    }
+
+    private fun showSnackBar() {
+        Snackbar.make(
+            requireActivity().findViewById(R.id.mainConstraintLayout),
+            "For the full experience enable Wifi/Mobile Data",
+            Snackbar.LENGTH_INDEFINITE
+        )
+            .setAction("Close", View.OnClickListener { })
+            .setActionTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+            .show()
     }
 }

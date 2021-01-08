@@ -33,12 +33,10 @@ class MainActivity : AppCompatActivity() {
             setOf(
                 R.id.photoListFragment,
                 R.id.topPicksFragment,
-                R.id.sharableFragment,
                 R.id.detailFragment,
                 R.id.editImageFragment
             )
         )
-
         bottomNavigationView.setupWithNavController(navController)
         setupActionBarWithNavController(navController, appBarConfiguration)
     }

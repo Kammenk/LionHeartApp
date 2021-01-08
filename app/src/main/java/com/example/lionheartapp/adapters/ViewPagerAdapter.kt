@@ -23,7 +23,6 @@ class ViewPagerAdapter(
 ) : PagerAdapter() {
 
     private var postList = aList
-    //private var context = context
     private lateinit var layoutInflater: LayoutInflater
 
     override fun getCount(): Int {
@@ -35,6 +34,7 @@ class ViewPagerAdapter(
     }
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
+        //Binding the provided data to the items within the view
         layoutInflater = LayoutInflater.from(context)
         val view = layoutInflater.inflate(R.layout.view_pager_item, container, false)
 

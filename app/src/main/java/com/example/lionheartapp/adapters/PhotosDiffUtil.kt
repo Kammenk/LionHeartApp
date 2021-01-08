@@ -15,10 +15,12 @@ class PhotosDiffUtil<T>(
     }
 
     override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        //checking if the provided items are the same
         return oldList[oldItemPosition] === newList[newItemPosition]
     }
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        //checking if the provided contents within the items are the same
         return oldList[oldItemPosition] == newList[newItemPosition]
     }
 

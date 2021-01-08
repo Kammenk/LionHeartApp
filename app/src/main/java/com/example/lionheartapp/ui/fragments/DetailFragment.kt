@@ -16,6 +16,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class DetailFragment : Fragment() {
 
+    //Variables
     private val args by navArgs<DetailFragmentArgs>()
     private lateinit var detailImage: ImageView
     private lateinit var detailDesc: TextView
@@ -31,25 +32,32 @@ class DetailFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_detail, container, false)
 
+        //Used when getting info from api
         val builder = StrictMode.VmPolicy.Builder()
         StrictMode.setVmPolicy(builder.build())
 
-        requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).visibility = View.GONE
+        //Hiding bottom nav
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).visibility =
+            View.GONE
         (activity as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+
+        //Enabling top menu
         setHasOptionsMenu(true)
 
+        //Variable initialization
         detailImage = view.findViewById(R.id.detailedImage)
         detailDesc = view.findViewById(R.id.detailedDesc)
         detailCreatorName = view.findViewById(R.id.detailedCreatorName)
         detailCreatorImage = view.findViewById(R.id.detailedCreatorImage)
         detailLikes = view.findViewById(R.id.detailedLikes)
 
+        //Binding data to the items in the view
         detailImage.setImageBitmap(ImageSetter.setImage(args.currentItem.photoUrlRegular))
-        detailDesc.text = if(args.currentItem.photoDescription.isEmpty() || args.currentItem.photoDescription.isBlank()) "The creator is yet to add a meaningful description" else args.currentItem.photoDescription
+        detailDesc.text =
+            if (args.currentItem.photoDescription == "null") "The creator is yet to add a meaningful description" else args.currentItem.photoDescription
         detailCreatorName.text = args.currentItem.photoCreatorName
         detailCreatorImage.setImageBitmap(ImageSetter.setImage(args.currentItem.photoCreatorImage))
         detailLikes.text = "${args.currentItem.photoLikes} likes"
-
         return view
     }
 
@@ -58,6 +66,7 @@ class DetailFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        //Moving to edit fragment
         if (item.itemId == R.id.edit) {
             val action =
                 DetailFragmentDirections.actionDetailFragmentToEditImageFragment(args.currentItem)

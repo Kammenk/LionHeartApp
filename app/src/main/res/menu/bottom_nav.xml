@@ -12,9 +12,4 @@
         app:showAsAction="ifRoom"
         android:icon="@drawable/ic_top_pick"
         />
-    <item   android:id="@+id/sharableFragment"
-        android:title="Sharable"
-        app:showAsAction="ifRoom"
-        android:icon="@drawable/ic_saved"
-        />
 </menu>

@@ -10,6 +10,41 @@ import java.util.ArrayList
 
 class RemoteAccess : PhotosAPI {
 
+    override suspend fun getCategories(
+        url: String,
+        slug: String,
+        page: Int,
+        limit: Int,
+        clientID: String
+    ): ArrayList<PhotoItem> {
+        val completeURL = "$url/$slug/photos?page=$page&per_page=$limit&client_id=$clientID"
+        println("complete url $completeURL")
+        val resultURL = withContext(Dispatchers.IO) {
+            (URL(completeURL).readText())
+        }
+        val jsonArray = JSONArray(resultURL)
+        var counter = 0
+        var jsonObject: JSONObject
+        val arrayList = ArrayList<PhotoItem>(emptyList())
+        while (counter < limit) {
+            jsonObject = jsonArray.getJSONObject(counter)
+            arrayList.add(
+                PhotoItem(
+                    photoCreatorName = jsonObject.getJSONObject("user").getString("name"),
+                    photoCreatorImage = jsonObject.getJSONObject("user")
+                        .getJSONObject("profile_image").getString("small"),
+                    photoDescription = jsonObject.getString("alt_description"),
+                    photoLikes = jsonObject.getString("likes").toInt(),
+                    photoUrlRegular = jsonObject.getJSONObject("urls").getString("regular"),
+                    photoUrlSmall = jsonObject.getJSONObject("urls").getString("small")
+                )
+            )
+
+            counter++
+        }
+        return arrayList
+    }
+
     override suspend fun getPhotos(
         url: String,
         page: Int,
@@ -17,8 +52,9 @@ class RemoteAccess : PhotosAPI {
         clientID: String
     ): ArrayList<PhotoItem> {
         val completeURL = "$url?page=$page&per_page=$limit&client_id=$clientID"
-        val resultURL = withContext(Dispatchers.IO){
-            (URL(completeURL).readText())}
+        val resultURL = withContext(Dispatchers.IO) {
+            (URL(completeURL).readText())
+        }
         val jsonArray = JSONArray(resultURL)
         var counter = 0
         var jsonObject: JSONObject

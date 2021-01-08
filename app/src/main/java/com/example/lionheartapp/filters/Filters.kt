@@ -1,7 +1,6 @@
 package com.example.lionheartapp.filters
 
 import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
 import android.widget.ImageView
 import com.zomato.photofilters.SampleFilters
 import com.zomato.photofilters.imageprocessors.Filter
@@ -11,66 +10,208 @@ import com.zomato.photofilters.imageprocessors.subfilters.SaturationSubFilter
 
 object Filters {
 
-    fun applyStarLitFilter(imageView: ImageView) {
+    fun applyStarLitFilter(
+        imageView: ImageView,
+        brightness: Int,
+        contrast: Float,
+        saturation: Float,
+        imageToImplement: Bitmap
+    ) {
+        //Applies specific filter with the relevant custom attribute if they were changes(i.e brightness was scaled up)
         val filter = SampleFilters.getStarLitFilter()
-        convertAndBindImage(imageView,filter)
+        filter.addSubFilter(BrightnessSubFilter(brightness))
+        filter.addSubFilter(ContrastSubFilter(contrast))
+        filter.addSubFilter(SaturationSubFilter(saturation))
+        imageView.setImageBitmap(
+            filter.processFilter(
+                imageToImplement.copy(
+                    Bitmap.Config.ARGB_8888,
+                    true
+                )
+            )
+        )
     }
 
-    fun applyBlueMessFilter(imageView: ImageView) {
+    fun applyBlueMessFilter(
+        imageView: ImageView,
+        brightness: Int,
+        contrast: Float,
+        saturation: Float,
+        imageToImplement: Bitmap
+    ) {
+        //Applies specific filter with the relevant custom attribute if they were changes(i.e brightness was scaled up)
         val filter = SampleFilters.getBlueMessFilter()
-        convertAndBindImage(imageView,filter)
+        filter.addSubFilter(BrightnessSubFilter(brightness))
+        filter.addSubFilter(ContrastSubFilter(contrast))
+        filter.addSubFilter(SaturationSubFilter(saturation))
+        imageView.setImageBitmap(
+            filter.processFilter(
+                imageToImplement.copy(
+                    Bitmap.Config.ARGB_8888,
+                    true
+                )
+            )
+        )
     }
 
-    fun applyAweStruckVibeFilter(imageView: ImageView) {
+    fun applyAweStruckVibeFilter(
+        imageView: ImageView,
+        brightness: Int,
+        contrast: Float,
+        saturation: Float,
+        imageToImplement: Bitmap
+    ) {
+        //Applies specific filter with the relevant custom attribute if they were changes(i.e brightness was scaled up)
         val filter = SampleFilters.getAweStruckVibeFilter()
-        convertAndBindImage(imageView,filter)
+        filter.addSubFilter(BrightnessSubFilter(brightness))
+        filter.addSubFilter(ContrastSubFilter(contrast))
+        filter.addSubFilter(SaturationSubFilter(saturation))
+        imageView.setImageBitmap(
+            filter.processFilter(
+                imageToImplement.copy(
+                    Bitmap.Config.ARGB_8888,
+                    true
+                )
+            )
+        )
     }
 
-    fun applyLimeStutterFilter(imageView: ImageView) {
+    fun applyLimeStutterFilter(
+        imageView: ImageView,
+        brightness: Int,
+        contrast: Float,
+        saturation: Float,
+        imageToImplement: Bitmap
+    ) {
+        //Applies specific filter with the relevant custom attribute if they were changes(i.e brightness was scaled up)
         val filter = SampleFilters.getLimeStutterFilter()
-        convertAndBindImage(imageView,filter)
+        filter.addSubFilter(BrightnessSubFilter(brightness))
+        filter.addSubFilter(ContrastSubFilter(contrast))
+        filter.addSubFilter(SaturationSubFilter(saturation))
+        imageView.setImageBitmap(
+            filter.processFilter(
+                imageToImplement.copy(
+                    Bitmap.Config.ARGB_8888,
+                    true
+                )
+            )
+        )
     }
 
-    fun applyNightWhisperFilter(imageView: ImageView) {
+    fun applyNightWhisperFilter(
+        imageView: ImageView,
+        brightness: Int,
+        contrast: Float,
+        saturation: Float,
+        imageToImplement: Bitmap
+    ) {
+        //Applies specific filter with the relevant custom attribute if they were changes(i.e brightness was scaled up)
         val filter = SampleFilters.getNightWhisperFilter()
-        convertAndBindImage(imageView,filter)
+        filter.addSubFilter(BrightnessSubFilter(brightness))
+        filter.addSubFilter(ContrastSubFilter(contrast))
+        filter.addSubFilter(SaturationSubFilter(saturation))
+        imageView.setImageBitmap(
+            filter.processFilter(
+                imageToImplement.copy(
+                    Bitmap.Config.ARGB_8888,
+                    true
+                )
+            )
+        )
     }
 
-    fun adjustBrightness(imageView: ImageView, brightness: Int, contrast: Float,saturation: Float, imageToImplement: Bitmap){
+    fun adjustBrightness(
+        imageView: ImageView,
+        brightness: Int,
+        contrast: Float,
+        saturation: Float,
+        imageToImplement: Bitmap
+    ) {
         //Adding the relevant filters and applying them to the main image view
         val myFilter = Filter()
         myFilter.addSubFilter(BrightnessSubFilter(brightness))
         myFilter.addSubFilter(ContrastSubFilter(contrast))
         myFilter.addSubFilter(SaturationSubFilter(saturation))
-        imageView.setImageBitmap(myFilter.processFilter(imageToImplement.copy(Bitmap.Config.ARGB_8888, true)))
+        imageView.setImageBitmap(
+            myFilter.processFilter(
+                imageToImplement.copy(
+                    Bitmap.Config.ARGB_8888,
+                    true
+                )
+            )
+        )
     }
 
-    fun adjustContrast(imageView: ImageView, contrast: Float,brightness: Int,saturation: Float, imageToImplement: Bitmap){
+    fun adjustContrast(
+        imageView: ImageView,
+        contrast: Float,
+        brightness: Int,
+        saturation: Float,
+        imageToImplement: Bitmap
+    ) {
         //Adding the relevant filters and applying them to the main image view
         val myFilter = Filter()
-        myFilter.addSubFilter(ContrastSubFilter(contrast))
         myFilter.addSubFilter(BrightnessSubFilter(brightness))
+        myFilter.addSubFilter(ContrastSubFilter(contrast))
         myFilter.addSubFilter(SaturationSubFilter(saturation))
-        imageView.setImageBitmap(myFilter.processFilter(imageToImplement.copy(Bitmap.Config.ARGB_8888, true)))
+        imageView.setImageBitmap(
+            myFilter.processFilter(
+                imageToImplement.copy(
+                    Bitmap.Config.ARGB_8888,
+                    true
+                )
+            )
+        )
     }
 
-    fun adjustSaturation(imageView: ImageView, saturation: Float, contrast: Float,brightness: Int, imageToImplement: Bitmap){
+    fun adjustSaturation(
+        imageView: ImageView,
+        saturation: Float,
+        contrast: Float,
+        brightness: Int,
+        imageToImplement: Bitmap
+    ) {
         //Adding the relevant filters and applying them to the main image view
         val myFilter = Filter()
-        myFilter.addSubFilter(SaturationSubFilter(saturation))
-        myFilter.addSubFilter(ContrastSubFilter(contrast))
         myFilter.addSubFilter(BrightnessSubFilter(brightness))
-        imageView.setImageBitmap(myFilter.processFilter(imageToImplement.copy(Bitmap.Config.ARGB_8888, true)))
+        myFilter.addSubFilter(ContrastSubFilter(contrast))
+        myFilter.addSubFilter(SaturationSubFilter(saturation))
+        imageView.setImageBitmap(
+            myFilter.processFilter(
+                imageToImplement.copy(
+                    Bitmap.Config.ARGB_8888,
+                    true
+                )
+            )
+        )
     }
 
-    private fun convertAndBindImage(imageView: ImageView,filter: Filter){
-        //Converts an image view to bitmap, applies filter and binds it to the main image view
-        val bitmapDrawable: BitmapDrawable = imageView.drawable as BitmapDrawable
-        val bitmap = bitmapDrawable.bitmap
-        val copyImage: Bitmap = bitmap.copy(Bitmap.Config.ARGB_8888,true)
-        val outputImage: Bitmap = filter.processFilter(copyImage)
-
-        imageView.setImageBitmap(outputImage)
+    private fun convertAndBindImage(
+        imageView: ImageView,
+        brightness: Int,
+        contrast: Float,
+        saturation: Float,
+        imageToImplement: Bitmap,
+        filter: Filter
+    ) {
+        //Applies filter and binds it to the main image view
+//        val bitmapDrawable: BitmapDrawable = imageView.drawable as BitmapDrawable
+//        val bitmap = bitmapDrawable.bitmap
+//        val copyImage: Bitmap = bitmap.copy(Bitmap.Config.ARGB_8888,true)
+//        val outputImage: Bitmap = filter.processFilter(copyImage)
+//
+//        imageView.setImageBitmap(outputImage)
+        filter.addSubFilter(BrightnessSubFilter(brightness))
+        filter.addSubFilter(ContrastSubFilter(contrast))
+        filter.addSubFilter(SaturationSubFilter(saturation))
+        imageView.setImageBitmap(
+            filter.processFilter(
+                imageToImplement.copy(
+                    Bitmap.Config.ARGB_8888,
+                    true
+                )
+            )
+        )
     }
 
 }

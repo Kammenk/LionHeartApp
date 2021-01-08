@@ -11,16 +11,13 @@ import android.os.StrictMode
 import android.view.*
 import android.widget.ImageView
 import android.widget.SeekBar
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import com.example.lionheartapp.ImageSetter
 import com.example.lionheartapp.R
 import com.example.lionheartapp.filters.Filters
-import com.zomato.photofilters.imageprocessors.Filter
-import com.zomato.photofilters.imageprocessors.subfilters.BrightnessSubFilter
-import com.zomato.photofilters.imageprocessors.subfilters.ContrastSubFilter
-import com.zomato.photofilters.imageprocessors.subfilters.SaturationSubFilter
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -50,10 +47,15 @@ class EditImageFragment : Fragment(), View.OnClickListener, SeekBar.OnSeekBarCha
 
     //Images
     private lateinit var originalImage: Bitmap
+
     // to backup image with filter applied
     private lateinit var filteredImage: Bitmap
+
     // the final image after applying brightness, saturation, contrast
     private lateinit var finalImage: Bitmap
+
+    //Used for reset
+    private lateinit var resetBtn: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -85,6 +87,8 @@ class EditImageFragment : Fragment(), View.OnClickListener, SeekBar.OnSeekBarCha
         brightnessSeekBar = view.findViewById(R.id.brightnessSeekbar)
         contrastSeekBar = view.findViewById(R.id.contrastSeekbar)
         saturationSeekBar = view.findViewById(R.id.saturationSeekbar)
+        resetBtn = view.findViewById(R.id.resetBtn)
+
 
         bindImages()
         filterSetup()
@@ -138,18 +142,11 @@ class EditImageFragment : Fragment(), View.OnClickListener, SeekBar.OnSeekBarCha
             R.id.shareEditedImage -> {
                 shareImage(requireContext(), currentImage)
             }
-            R.id.downloadEditedImage -> {
-                saveImageOnDevice(currentImage)
-            }
             else -> {
                 return super.onOptionsItemSelected(item)
             }
         }
         return true
-    }
-
-    private fun saveImageOnDevice(imageView: ImageView) {
-
     }
 
     //Used to share an image after its been filtered
@@ -161,8 +158,9 @@ class EditImageFragment : Fragment(), View.OnClickListener, SeekBar.OnSeekBarCha
         intent.apply {
             this.action = Intent.ACTION_SEND
             this.type = "image/*"
-            this.putExtra(Intent.EXTRA_STREAM,getLocalBitmapUri(bitmap,context))
+            this.putExtra(Intent.EXTRA_STREAM, getLocalBitmapUri(bitmap, context))
         }
+        //Opening a new activity with share options
         context.startActivity(Intent.createChooser(intent, "Share Image"))
     }
 
@@ -185,40 +183,107 @@ class EditImageFragment : Fragment(), View.OnClickListener, SeekBar.OnSeekBarCha
     }
 
     override fun onClick(p0: View?) {
+        //Applying different filters to our image
         when (p0!!.id) {
             R.id.noFilter -> {
                 currentImage.setImageBitmap(ImageSetter.setImage(args.currentItem.photoUrlRegular))
             }
             R.id.starLitFilter -> {
                 currentImage.setImageBitmap(ImageSetter.setImage(args.currentItem.photoUrlRegular))
-                Filters.applyStarLitFilter(currentImage)
+                Filters.applyStarLitFilter(
+                    currentImage,
+                    brightnessProgress,
+                    contrastProgress,
+                    saturationProgress,
+                    finalImage
+                )
             }
             R.id.blueMessFilter -> {
                 currentImage.setImageBitmap(ImageSetter.setImage(args.currentItem.photoUrlRegular))
-                Filters.applyBlueMessFilter(currentImage)
+                Filters.applyBlueMessFilter(
+                    currentImage,
+                    brightnessProgress,
+                    contrastProgress,
+                    saturationProgress,
+                    finalImage
+                )
             }
             R.id.aweStruckVibeFilter -> {
                 currentImage.setImageBitmap(ImageSetter.setImage(args.currentItem.photoUrlRegular))
-                Filters.applyAweStruckVibeFilter(currentImage)
+                Filters.applyAweStruckVibeFilter(
+                    currentImage,
+                    brightnessProgress,
+                    contrastProgress,
+                    saturationProgress,
+                    finalImage
+                )
             }
             R.id.limeStutterFilter -> {
                 currentImage.setImageBitmap(ImageSetter.setImage(args.currentItem.photoUrlRegular))
-                Filters.applyLimeStutterFilter(currentImage)
+                Filters.applyLimeStutterFilter(
+                    currentImage,
+                    brightnessProgress,
+                    contrastProgress,
+                    saturationProgress,
+                    finalImage
+                )
             }
             R.id.nightWhisperFilter -> {
                 currentImage.setImageBitmap(ImageSetter.setImage(args.currentItem.photoUrlRegular))
-                Filters.applyNightWhisperFilter(currentImage)
+                Filters.applyNightWhisperFilter(
+                    currentImage,
+                    brightnessProgress,
+                    contrastProgress,
+                    saturationProgress,
+                    finalImage
+                )
+            }
+            R.id.resetBtn -> {
+                currentImage.setImageBitmap(ImageSetter.setImage(args.currentItem.photoUrlRegular))
+                brightnessSeekBar.progress = 100
+                contrastSeekBar.progress = 10
+                saturationSeekBar.progress = 15
             }
         }
     }
 
     private fun filterSetup() {
         //Applying filter to the relevant image views
-        Filters.applyStarLitFilter(starLitFilter)
-        Filters.applyBlueMessFilter(blueMessFilter)
-        Filters.applyAweStruckVibeFilter(aweStruckVibeFilter)
-        Filters.applyLimeStutterFilter(limeStutterFilter)
-        Filters.applyNightWhisperFilter(nightWhisperFilter)
+        Filters.applyStarLitFilter(
+            starLitFilter,
+            brightnessProgress,
+            contrastProgress,
+            saturationProgress,
+            finalImage
+        )
+        Filters.applyBlueMessFilter(
+            blueMessFilter,
+            brightnessProgress,
+            contrastProgress,
+            saturationProgress,
+            finalImage
+        )
+        Filters.applyAweStruckVibeFilter(
+            aweStruckVibeFilter,
+            brightnessProgress,
+            contrastProgress,
+            saturationProgress,
+            finalImage
+        )
+        Filters.applyLimeStutterFilter(
+            limeStutterFilter,
+            brightnessProgress,
+            contrastProgress,
+            saturationProgress,
+            finalImage
+        )
+        Filters.applyNightWhisperFilter(
+            nightWhisperFilter,
+            brightnessProgress,
+            contrastProgress,
+            saturationProgress,
+            finalImage
+        )
 
         noFilter.setOnClickListener(this)
         starLitFilter.setOnClickListener(this)
@@ -226,28 +291,49 @@ class EditImageFragment : Fragment(), View.OnClickListener, SeekBar.OnSeekBarCha
         aweStruckVibeFilter.setOnClickListener(this)
         limeStutterFilter.setOnClickListener(this)
         nightWhisperFilter.setOnClickListener(this)
+        resetBtn.setOnClickListener(this)
     }
 
     override fun onProgressChanged(seekBar: SeekBar?, progress: Int, p2: Boolean) {
+        //Changing the image's brightness, contrast and saturation using the seekbars
         if (seekBar != null) {
             if (seekBar.id == R.id.brightnessSeekbar) {
+                println("called")
                 // brightness values are b/w -100 to +100
-                    brightnessProgress = progress - 100
-                Filters.adjustBrightness(currentImage,brightnessProgress,contrastProgress,saturationProgress,finalImage)
+                brightnessProgress = progress - 100
+                Filters.adjustBrightness(
+                    currentImage,
+                    brightnessProgress,
+                    contrastProgress,
+                    saturationProgress,
+                    originalImage
+                )
             }
 
             if (seekBar.id == R.id.contrastSeekbar) {
                 //Converting value to float because of the filter function
-                val progressInFloat: Float = .10f * (progress + 10)
+                val progressInFloat: Float = .10f * progress
                 contrastProgress = progressInFloat
-                Filters.adjustContrast(currentImage,contrastProgress,brightnessProgress,contrastProgress,finalImage)
+                Filters.adjustContrast(
+                    currentImage,
+                    contrastProgress,
+                    brightnessProgress,
+                    contrastProgress,
+                    finalImage
+                )
             }
 
             if (seekBar.id == R.id.saturationSeekbar) {
                 //Converting value to float because of the filter function
                 val progressInFloat: Float = .10f * progress
                 saturationProgress = progressInFloat
-                Filters.adjustSaturation(currentImage,saturationProgress,contrastProgress,brightnessProgress,finalImage)
+                Filters.adjustSaturation(
+                    currentImage,
+                    saturationProgress,
+                    contrastProgress,
+                    brightnessProgress,
+                    finalImage
+                )
             }
         }
     }
