@@ -15,7 +15,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
-import com.example.lionheartapp.ImageSetter
+import com.example.lionheartapp.util.ImageSetter
 import com.example.lionheartapp.R
 import com.example.lionheartapp.filters.Filters
 import java.io.File
@@ -34,6 +34,7 @@ class EditImageFragment : Fragment(), View.OnClickListener, SeekBar.OnSeekBarCha
     private lateinit var aweStruckVibeFilter: ImageView
     private lateinit var limeStutterFilter: ImageView
     private lateinit var nightWhisperFilter: ImageView
+    private var filterSelected: Int = 0
 
     //Seekbars
     private lateinit var brightnessSeekBar: SeekBar
@@ -88,7 +89,6 @@ class EditImageFragment : Fragment(), View.OnClickListener, SeekBar.OnSeekBarCha
         contrastSeekBar = view.findViewById(R.id.contrastSeekbar)
         saturationSeekBar = view.findViewById(R.id.saturationSeekbar)
         resetBtn = view.findViewById(R.id.resetBtn)
-
 
         bindImages()
         filterSetup()
@@ -186,9 +186,11 @@ class EditImageFragment : Fragment(), View.OnClickListener, SeekBar.OnSeekBarCha
         //Applying different filters to our image
         when (p0!!.id) {
             R.id.noFilter -> {
+                filterSelected = 0
                 currentImage.setImageBitmap(ImageSetter.setImage(args.currentItem.photoUrlRegular))
             }
             R.id.starLitFilter -> {
+                filterSelected = 1
                 currentImage.setImageBitmap(ImageSetter.setImage(args.currentItem.photoUrlRegular))
                 Filters.applyStarLitFilter(
                     currentImage,
@@ -199,6 +201,7 @@ class EditImageFragment : Fragment(), View.OnClickListener, SeekBar.OnSeekBarCha
                 )
             }
             R.id.blueMessFilter -> {
+                filterSelected = 2
                 currentImage.setImageBitmap(ImageSetter.setImage(args.currentItem.photoUrlRegular))
                 Filters.applyBlueMessFilter(
                     currentImage,
@@ -209,6 +212,7 @@ class EditImageFragment : Fragment(), View.OnClickListener, SeekBar.OnSeekBarCha
                 )
             }
             R.id.aweStruckVibeFilter -> {
+                filterSelected = 3
                 currentImage.setImageBitmap(ImageSetter.setImage(args.currentItem.photoUrlRegular))
                 Filters.applyAweStruckVibeFilter(
                     currentImage,
@@ -219,6 +223,7 @@ class EditImageFragment : Fragment(), View.OnClickListener, SeekBar.OnSeekBarCha
                 )
             }
             R.id.limeStutterFilter -> {
+                filterSelected = 4
                 currentImage.setImageBitmap(ImageSetter.setImage(args.currentItem.photoUrlRegular))
                 Filters.applyLimeStutterFilter(
                     currentImage,
@@ -229,6 +234,7 @@ class EditImageFragment : Fragment(), View.OnClickListener, SeekBar.OnSeekBarCha
                 )
             }
             R.id.nightWhisperFilter -> {
+                filterSelected = 5
                 currentImage.setImageBitmap(ImageSetter.setImage(args.currentItem.photoUrlRegular))
                 Filters.applyNightWhisperFilter(
                     currentImage,
@@ -239,10 +245,11 @@ class EditImageFragment : Fragment(), View.OnClickListener, SeekBar.OnSeekBarCha
                 )
             }
             R.id.resetBtn -> {
-                currentImage.setImageBitmap(ImageSetter.setImage(args.currentItem.photoUrlRegular))
+                filterSelected = 0
                 brightnessSeekBar.progress = 100
                 contrastSeekBar.progress = 10
                 saturationSeekBar.progress = 15
+                currentImage.setImageBitmap(ImageSetter.setImage(args.currentItem.photoUrlRegular))
             }
         }
     }
@@ -298,15 +305,15 @@ class EditImageFragment : Fragment(), View.OnClickListener, SeekBar.OnSeekBarCha
         //Changing the image's brightness, contrast and saturation using the seekbars
         if (seekBar != null) {
             if (seekBar.id == R.id.brightnessSeekbar) {
-                println("called")
                 // brightness values are b/w -100 to +100
                 brightnessProgress = progress - 100
-                Filters.adjustBrightness(
+                Filters.applyCustomFilters(
                     currentImage,
                     brightnessProgress,
                     contrastProgress,
                     saturationProgress,
-                    originalImage
+                    originalImage,
+                    filterSelected
                 )
             }
 
@@ -314,12 +321,13 @@ class EditImageFragment : Fragment(), View.OnClickListener, SeekBar.OnSeekBarCha
                 //Converting value to float because of the filter function
                 val progressInFloat: Float = .10f * progress
                 contrastProgress = progressInFloat
-                Filters.adjustContrast(
+                Filters.applyCustomFilters(
                     currentImage,
-                    contrastProgress,
                     brightnessProgress,
                     contrastProgress,
-                    finalImage
+                    saturationProgress,
+                    originalImage,
+                    filterSelected
                 )
             }
 
@@ -327,12 +335,13 @@ class EditImageFragment : Fragment(), View.OnClickListener, SeekBar.OnSeekBarCha
                 //Converting value to float because of the filter function
                 val progressInFloat: Float = .10f * progress
                 saturationProgress = progressInFloat
-                Filters.adjustSaturation(
+                Filters.applyCustomFilters(
                     currentImage,
-                    saturationProgress,
-                    contrastProgress,
                     brightnessProgress,
-                    finalImage
+                    contrastProgress,
+                    saturationProgress,
+                    originalImage,
+                    filterSelected
                 )
             }
         }

@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager.widget.PagerAdapter
@@ -16,9 +18,9 @@ import com.example.lionheartapp.api.RemoteAccess
 import com.example.lionheartapp.models.PhotoItem
 import com.example.lionheartapp.util.Constants
 import com.example.lionheartapp.util.Constants.Companion.BASE_URL
+import com.example.lionheartapp.util.SnackBar
 import com.example.lionheartapp.viewmodels.MainViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.snackbar.Snackbar
 
 import java.util.ArrayList
 
@@ -33,6 +35,9 @@ class TopPicksFragment : Fragment() {
     private lateinit var mainViewModel: MainViewModel
     private lateinit var remoteAccess: RemoteAccess
     private lateinit var bottomNavigationView: BottomNavigationView
+    private lateinit var snackBar: SnackBar
+    private lateinit var noWifiImage: ImageView
+    private lateinit var noWifiTextView: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -72,7 +77,13 @@ class TopPicksFragment : Fragment() {
             ContextCompat.getColor(requireContext(), R.color.postColor10),
         )
 
+        snackBar = SnackBar()
+        noWifiImage = view.findViewById(R.id.noWifiImage)
+        noWifiTextView = view.findViewById(R.id.noWifiText)
+
         mainViewModel.photosResponse.observe(viewLifecycleOwner, { response ->
+            noWifiImage.visibility = View.GONE
+            noWifiTextView.visibility = View.GONE
             adapter = ViewPagerAdapter(response, requireContext())
             viewPager.adapter = adapter
         })
@@ -103,21 +114,15 @@ class TopPicksFragment : Fragment() {
             override fun onPageScrollStateChanged(state: Int) {
             }
         })
-        //if there is no internet we display the snackbar
+        //if there is no internet we display the snackbar and other notifications
         if (!mainViewModel.hasInternetConnection()) {
-            showSnackBar()
+            noWifiImage.visibility = View.VISIBLE
+            noWifiTextView.visibility = View.VISIBLE
+            snackBar.showSnackbar(
+                requireActivity().findViewById(R.id.mainConstraintLayout),
+                requireContext()
+            )
         }
         return view
-    }
-
-    private fun showSnackBar() {
-        Snackbar.make(
-            requireActivity().findViewById(R.id.mainConstraintLayout),
-            "For the full experience enable Wifi/Mobile Data",
-            Snackbar.LENGTH_INDEFINITE
-        )
-            .setAction("Close", View.OnClickListener { })
-            .setActionTextColor(ContextCompat.getColor(requireContext(), R.color.white))
-            .show()
     }
 }

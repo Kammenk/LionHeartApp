@@ -33,4 +33,11 @@
     <string name="brightness">Brightness</string>
     <string name="contrast">Contrast</string>
     <string name="saturation">Saturation</string>
+    <string name="edit">Edit</string>
+    <string name="share">Share</string>
+    <string name="photos">Photos</string>
+    <string name="top_picks">Top Picks</string>
+    <string name="it_seems_you_ve_disabled_your_connection_to_the_internet">It seems you\'ve disabled your connection to the internet.</string>
+    <string name="nowifiicon">NoWifiIcon</string>
+    <string name="reset">Reset</string>
 </resources>

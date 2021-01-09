@@ -8,7 +8,7 @@ import androidx.cardview.widget.CardView
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.lionheartapp.ImageSetter
+import com.example.lionheartapp.util.ImageSetter
 import com.example.lionheartapp.R
 import com.example.lionheartapp.models.PhotoItem
 import com.example.lionheartapp.ui.fragments.PhotoListFragmentDirections
@@ -34,7 +34,6 @@ class PhotoAdapter : RecyclerView.Adapter<PhotoAdapter.MyViewHolder>() {
         //Binding the data we were provided to the items in the view
         val currentItem = photoList[position]
         val image = holder.itemView.findViewById<ImageView>(R.id.photoImage)
-        println("current image ${currentItem.photoUrlSmall}")
         image.setImageBitmap(ImageSetter.setImage(currentItem.photoUrlSmall.toString()))
         holder.itemView.findViewById<CardView>(R.id.photoItem).setOnClickListener {
             val action =

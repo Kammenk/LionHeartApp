@@ -120,98 +120,43 @@ object Filters {
         )
     }
 
-    fun adjustBrightness(
-        imageView: ImageView,
-        brightness: Int,
-        contrast: Float,
-        saturation: Float,
-        imageToImplement: Bitmap
-    ) {
-        //Adding the relevant filters and applying them to the main image view
-        val myFilter = Filter()
-        myFilter.addSubFilter(BrightnessSubFilter(brightness))
-        myFilter.addSubFilter(ContrastSubFilter(contrast))
-        myFilter.addSubFilter(SaturationSubFilter(saturation))
-        imageView.setImageBitmap(
-            myFilter.processFilter(
-                imageToImplement.copy(
-                    Bitmap.Config.ARGB_8888,
-                    true
-                )
-            )
-        )
-    }
-
-    fun adjustContrast(
-        imageView: ImageView,
-        contrast: Float,
-        brightness: Int,
-        saturation: Float,
-        imageToImplement: Bitmap
-    ) {
-        //Adding the relevant filters and applying them to the main image view
-        val myFilter = Filter()
-        myFilter.addSubFilter(BrightnessSubFilter(brightness))
-        myFilter.addSubFilter(ContrastSubFilter(contrast))
-        myFilter.addSubFilter(SaturationSubFilter(saturation))
-        imageView.setImageBitmap(
-            myFilter.processFilter(
-                imageToImplement.copy(
-                    Bitmap.Config.ARGB_8888,
-                    true
-                )
-            )
-        )
-    }
-
-    fun adjustSaturation(
-        imageView: ImageView,
-        saturation: Float,
-        contrast: Float,
-        brightness: Int,
-        imageToImplement: Bitmap
-    ) {
-        //Adding the relevant filters and applying them to the main image view
-        val myFilter = Filter()
-        myFilter.addSubFilter(BrightnessSubFilter(brightness))
-        myFilter.addSubFilter(ContrastSubFilter(contrast))
-        myFilter.addSubFilter(SaturationSubFilter(saturation))
-        imageView.setImageBitmap(
-            myFilter.processFilter(
-                imageToImplement.copy(
-                    Bitmap.Config.ARGB_8888,
-                    true
-                )
-            )
-        )
-    }
-
-    private fun convertAndBindImage(
+    fun applyCustomFilters(
         imageView: ImageView,
         brightness: Int,
         contrast: Float,
         saturation: Float,
         imageToImplement: Bitmap,
-        filter: Filter
+        filterToApply: Int
     ) {
-        //Applies filter and binds it to the main image view
-//        val bitmapDrawable: BitmapDrawable = imageView.drawable as BitmapDrawable
-//        val bitmap = bitmapDrawable.bitmap
-//        val copyImage: Bitmap = bitmap.copy(Bitmap.Config.ARGB_8888,true)
-//        val outputImage: Bitmap = filter.processFilter(copyImage)
-//
-//        imageView.setImageBitmap(outputImage)
-        filter.addSubFilter(BrightnessSubFilter(brightness))
-        filter.addSubFilter(ContrastSubFilter(contrast))
-        filter.addSubFilter(SaturationSubFilter(saturation))
+        //Adding the relevant filters and applying them to the main image view
+        var myFilter = Filter()
+        when (filterToApply) {
+            0 -> {
+                myFilter = Filter()
+            }
+            1 -> {
+                myFilter = SampleFilters.getStarLitFilter()
+            }
+            2 -> {
+                myFilter = SampleFilters.getBlueMessFilter()
+            }
+            3 -> {
+                myFilter = SampleFilters.getAweStruckVibeFilter()
+            }
+            4 -> {
+                myFilter = SampleFilters.getLimeStutterFilter()
+            }
+            5 -> {
+                myFilter = SampleFilters.getNightWhisperFilter()
+            }
+        }
+        myFilter.addSubFilter(BrightnessSubFilter(brightness))
+        myFilter.addSubFilter(ContrastSubFilter(contrast))
+        myFilter.addSubFilter(SaturationSubFilter(saturation))
         imageView.setImageBitmap(
-            filter.processFilter(
-                imageToImplement.copy(
-                    Bitmap.Config.ARGB_8888,
-                    true
-                )
+            myFilter.processFilter(
+                imageToImplement.copy(Bitmap.Config.ARGB_8888, true)
             )
         )
     }
-
 }

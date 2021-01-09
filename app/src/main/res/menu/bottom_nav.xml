@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    >
-    <item   android:id="@+id/photoListFragment"
-            android:title="Photos"
-            app:showAsAction="ifRoom"
-            android:icon="@drawable/ic_photo_list"
-        />
-    <item   android:id="@+id/topPicksFragment"
-        android:title="Top Picks"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/photoListFragment"
+        android:title="@string/photos"
         app:showAsAction="ifRoom"
-        android:icon="@drawable/ic_top_pick"
-        />
+        android:icon="@drawable/ic_photo_list" />
+    <item
+        android:id="@+id/topPicksFragment"
+        android:title="@string/top_picks"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_top_pick" />
 </menu>

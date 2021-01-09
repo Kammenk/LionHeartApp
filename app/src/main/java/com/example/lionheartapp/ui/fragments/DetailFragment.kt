@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.example.lionheartapp.ImageSetter
+import com.example.lionheartapp.util.ImageSetter
 import com.example.lionheartapp.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
 

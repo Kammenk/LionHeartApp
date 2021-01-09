@@ -5,8 +5,8 @@ import android.os.StrictMode
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
@@ -17,9 +17,9 @@ import com.example.lionheartapp.api.RemoteAccess
 import com.example.lionheartapp.util.Constants.Companion.ACCESS_KEY
 import com.example.lionheartapp.util.Constants.Companion.BASE_CATEGORIES_URL
 import com.example.lionheartapp.util.Constants.Companion.BASE_URL
+import com.example.lionheartapp.util.SnackBar
 import com.example.lionheartapp.viewmodels.MainViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.snackbar.Snackbar
 import kotlin.random.Random
 
 class PhotoListFragment : Fragment(), View.OnClickListener {
@@ -30,6 +30,8 @@ class PhotoListFragment : Fragment(), View.OnClickListener {
     private lateinit var photosRecyclerView: RecyclerView
     private lateinit var remoteAccess: RemoteAccess
     private lateinit var bottomNavigationView: BottomNavigationView
+    private lateinit var noWifiImage: ImageView
+    private lateinit var noWifiTextView: TextView
 
     //Carousel items
     private lateinit var firstItem: TextView
@@ -37,6 +39,9 @@ class PhotoListFragment : Fragment(), View.OnClickListener {
     private lateinit var thirdItem: TextView
     private lateinit var fourthItem: TextView
     private lateinit var fifthItem: TextView
+
+    //Snackbar
+    private lateinit var snackBar: SnackBar
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -71,6 +76,10 @@ class PhotoListFragment : Fragment(), View.OnClickListener {
         thirdItem = view.findViewById(R.id.carouselTitleThree)
         fourthItem = view.findViewById(R.id.carouselTitleFour)
         fifthItem = view.findViewById(R.id.carouselTitleFive)
+        noWifiImage = view.findViewById(R.id.noWifiImage)
+        noWifiTextView = view.findViewById(R.id.noWifiText)
+
+        snackBar = SnackBar()
 
         firstItem.setOnClickListener(this)
         secondItem.setOnClickListener(this)
@@ -87,23 +96,16 @@ class PhotoListFragment : Fragment(), View.OnClickListener {
 
         setupRecyclerView()
 
-        //If there is no internet connection we show snackbar
+        //If there is no internet connection we show snackbar and other notifications
         if (!mainViewModel.hasInternetConnection()) {
-            showSnackBar()
+            noWifiImage.visibility = View.VISIBLE
+            noWifiTextView.visibility = View.VISIBLE
+            snackBar.showSnackbar(
+                requireActivity().findViewById(R.id.mainConstraintLayout),
+                requireContext()
+            )
         }
         return view
-    }
-
-    private fun showSnackBar() {
-        //Shows Snackbar that stays up until dismissed
-        Snackbar.make(
-            requireActivity().findViewById(R.id.mainConstraintLayout),
-            "For the full experience enable Wifi/Mobile Data",
-            Snackbar.LENGTH_INDEFINITE
-        )
-            .setAction("Close", View.OnClickListener { })
-            .setActionTextColor(ContextCompat.getColor(requireContext(), R.color.white))
-            .show()
     }
 
     private fun setupRecyclerView() {
@@ -119,27 +121,55 @@ class PhotoListFragment : Fragment(), View.OnClickListener {
 
     override fun onClick(p0: View?) {
         //Generating new images for specific categories
+        if (mainViewModel.hasInternetConnection()) {
+            noWifiImage.visibility = View.GONE
+            noWifiTextView.visibility = View.GONE
+        }
         when (p0!!.id) {
             R.id.carouselTitleOne -> {
-                mainViewModel.getCategories(BASE_CATEGORIES_URL, "nature", Random.nextInt(0,4), 20, ACCESS_KEY)
+                mainViewModel.getCategories(
+                    BASE_CATEGORIES_URL,
+                    "nature",
+                    Random.nextInt(0, 4),
+                    20,
+                    ACCESS_KEY
+                )
             }
             R.id.carouselTitleTwo -> {
-                mainViewModel.getCategories(BASE_CATEGORIES_URL, "people", Random.nextInt(0,4), 20, ACCESS_KEY)
+                mainViewModel.getCategories(
+                    BASE_CATEGORIES_URL,
+                    "people",
+                    Random.nextInt(0, 4),
+                    20,
+                    ACCESS_KEY
+                )
             }
             R.id.carouselTitleThree -> {
                 mainViewModel.getCategories(
                     BASE_CATEGORIES_URL,
                     "current-events",
-                    Random.nextInt(0,4),
+                    Random.nextInt(0, 4),
                     20,
                     ACCESS_KEY
                 )
             }
             R.id.carouselTitleFour -> {
-                mainViewModel.getCategories(BASE_CATEGORIES_URL, "fashion", Random.nextInt(0,4), 20, ACCESS_KEY)
+                mainViewModel.getCategories(
+                    BASE_CATEGORIES_URL,
+                    "fashion",
+                    Random.nextInt(0, 4),
+                    20,
+                    ACCESS_KEY
+                )
             }
             R.id.carouselTitleFive -> {
-                mainViewModel.getCategories(BASE_CATEGORIES_URL, "film", Random.nextInt(0,4), 20, ACCESS_KEY)
+                mainViewModel.getCategories(
+                    BASE_CATEGORIES_URL,
+                    "film",
+                    Random.nextInt(0, 4),
+                    20,
+                    ACCESS_KEY
+                )
             }
         }
     }
